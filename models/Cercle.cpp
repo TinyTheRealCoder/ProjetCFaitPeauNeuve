@@ -78,5 +78,5 @@ Cercle &Cercle::operator=(const Cercle &other)
 std::string Cercle::Display()
 //-------------------------------------------
 {
-    return "<circle cx=\"" + std::to_string(m_center.GetX()) + "\" cy=\"" + std::to_string(m_center.GetY()) + "\" r=\"" + std::to_string(m_radius) + "\" stroke=\"\" stroke-line=\"\" fill=\"\" >";
+    return "<circle cx=\"" + std::to_string(m_center.GetX()) + "\" cy=\"" + std::to_string(m_center.GetY()) + "\" r=\"" + std::to_string(m_radius) + "\" stroke=\"rgba(" +std::to_string(m_red_stroke)+ "," +std::to_string(m_green_stroke)+ "," +std::to_string(m_blue_stroke)+ "," +std::to_string(m_opacity_stroke) + "\" stroke-line=\"" + std::to_string(m_stroke_width)  +"\" fill=\"\" >";
 }
