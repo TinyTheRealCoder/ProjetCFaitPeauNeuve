@@ -19,7 +19,7 @@ public:
     // Op�rateur d'affectation
     Cercle &operator=(const Cercle &other);
     
-    void draw(wxClientDC drawC) override;
+    void draw(wxClientDC& drawC) override;
 
     // M�thodes virtuelles pour surcharger celles de la classe M�re
     //virtual float Surface() const override;

@@ -22,7 +22,7 @@ Cercle::Cercle(Point centre, int radius, int IndProfond, string label) :
     m_circleCount++;
 }
 
-void Cercle::draw(wxClientDC drawC) 
+void Cercle::draw(wxClientDC& drawC) 
 {	
     drawC.DrawCircle(wxPoint(m_center.GetX(),m_center.GetY()),(m_radius));
 }
