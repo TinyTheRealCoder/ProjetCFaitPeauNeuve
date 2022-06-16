@@ -26,6 +26,7 @@ public:
     //MODIFY
     virtual std::string Display() override;
 	
+    void draw(wxClientDC& drawC) override;
 	
 // Pourrait aussi �tre "protected:"
 private:

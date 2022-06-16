@@ -93,7 +93,7 @@ int Ligne::GetY2()
 
 void Ligne::draw(wxClientDC& drawC) 
 {	
-    drawC.DrawLine(p1.GetX(),p2.GetX(),p1.GetY(),p2.GetY());
+    drawC.DrawLine(wxPoint(p1.GetX(),p1.GetY()),wxPoint(p2.GetX(),p2.GetY()));
 }
 
 //MODIFY

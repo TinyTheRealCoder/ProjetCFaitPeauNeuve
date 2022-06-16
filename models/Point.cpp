@@ -102,28 +102,29 @@ int Point::GetPointCount()
 //-------------------------------------------
 float Point::Distance(const Point *p) const
 //-------------------------------------------
-// théorème de pythagore :
-// dans un triangle rectangle, le carré de la longueur de l'hypoténuse
-// est égal à la somme des carrés des longueurs des deux autres c^otés
+// thï¿½orï¿½me de pythagore :
+// dans un triangle rectangle, le carrï¿½ de la longueur de l'hypotï¿½nuse
+// est ï¿½gal ï¿½ la somme des carrï¿½s des longueurs des deux autres c^otï¿½s
 {
     return sqrt((m_x - p->m_x) * (m_x - p->m_x) + (m_y - p->m_y) * (m_y - p->m_y));
 }
 
 //-------------------------------------------
 float Point::Distance(const Point &p) const
-// identique à float Point::Distance(Point p)
-// remarque : on ne peut pas en plus surcharger avec la méthode
+// identique ï¿½ float Point::Distance(Point p)
+// remarque : on ne peut pas en plus surcharger avec la mï¿½thode
 // float Point::Distance(Point p)
-// car il y aurait ambiguité au niveau de l?appel :
-// dans les 2 cas, le param`etre passé serait de type Point,
-// ce qui ne permet pas au compilateur (ni à l(^etre humain)
-// de savoir quelle version de la méthode appeler.
+// car il y aurait ambiguitï¿½ au niveau de l?appel :
+// dans les 2 cas, le param`etre passï¿½ serait de type Point,
+// ce qui ne permet pas au compilateur (ni ï¿½ l(^etre humain)
+// de savoir quelle version de la mï¿½thode appeler.
 //-------------------------------------------
 {
     return sqrt((m_x - p.m_x) * (m_x - p.m_x) + (m_y - p.m_y) * (m_y - p.m_y));
 }
 
 
-// Déclaration pour réserver l'espace mémoire de l'attribut statique
+// Dï¿½claration pour rï¿½server l'espace mï¿½moire de l'attribut statique
 // static
 int Point::m_pointCount = 0;    // Ici, on ne met pas static
+

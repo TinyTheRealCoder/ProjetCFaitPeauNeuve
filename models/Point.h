@@ -6,7 +6,7 @@ class Point
 //-------------------------------------------
 {
 public:                        // interface publique de la classe
-    Point();                   // constructeur par défaut
+    Point();                   // constructeur par dï¿½faut
     Point(int x, int y);       // constructeur
     Point(int z);              // constructeur (x = y)
     ~Point();                  // destructeur
@@ -20,21 +20,21 @@ public:                        // interface publique de la classe
     int GetX() const;
     int GetY() const;
 
-    // Méthodes const (qui ne modifie pas l'objet)
-    void Display() const;      // affiche les coordonnées du point
+    // Mï¿½thodes const (qui ne modifie pas l'objet)
+    void Display() const;      // affiche les coordonnï¿½es du point
     bool XEgalY() const;
     float Distance(const Point &p) const;
     float Distance(const Point *p) const;
 
-    // Méthode statique
+    // Mï¿½thode statique
     static int GetPointCount(); // retourne le nombre de point
 
-private:                        // invisible à l?utilisateur de la classe
-    int m_x;                    // les coordonnées
+private:                        // invisible ï¿½ l?utilisateur de la classe
+    int m_x;                    // les coordonnï¿½es
     int m_y;                    // du point
 
     // Attribut statique
-    static int m_pointCount;    // donnée commune à tous les objets
+    static int m_pointCount;    // donnï¿½e commune ï¿½ tous les objets
 };
 
-#endif // __POINT_H__ : retour à la ligne obligatoire pour certains compilateurs
+#endif // __POINT_H__ : retour ï¿½ la ligne obligatoire pour certains compilateurs

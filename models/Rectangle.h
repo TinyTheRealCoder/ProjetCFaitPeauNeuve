@@ -33,6 +33,8 @@ public:                                     // interface publique de la classe
     //MODIFY
     virtual std::string Display() override;
 
+    void draw(wxClientDC& drawC) override;
+
     // On rajoute les autres m�thodes virtuelles
     //virtual float Surface() const override;
     //virtual float Perimeter() const override;
@@ -47,5 +49,7 @@ private: // invisible � l?utilisateur de la classe
 
     static unsigned int m_rectCount; // donnee commune � tous les rectangles
 };
+
+
 
 #endif // __RECTANGLE_H__

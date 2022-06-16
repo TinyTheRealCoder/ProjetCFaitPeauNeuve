@@ -45,6 +45,12 @@ Rectangle::Rectangle(const Point& p, int w, int h, int IndProfond, const std::st
     m_rectCount++;
 }
 
+void Rectangle::draw(wxClientDC& drawC) 
+{	
+    drawC.DrawRectangle(wxPoint(m_corner.GetX(),m_corner.GetY()),wxSize(m_w,m_h));
+}
+
+
 //-------------------------------------------
 Rectangle::~Rectangle()
 //-------------------------------------------

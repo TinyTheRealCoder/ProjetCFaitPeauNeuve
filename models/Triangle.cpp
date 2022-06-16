@@ -4,6 +4,12 @@
 #include <cstdlib>
 #include <cmath>
 
+WX_DECLARE_LIST(wxPoint, MyPoints);
+
+#include <wx/listimpl.cpp>
+
+WX_DEFINE_LIST(MyPoints);
+
 using namespace std; // Jamais dans un point h(pp) !
 
 // R�servation m�moire de l'attribut statique de la classe Triangle
@@ -54,6 +60,17 @@ Triangle &Triangle::operator=(const Triangle &other)
     m_p2 = other.m_p2;
     m_p3 = other.m_p3;
     return *this;
+}
+
+void Triangle::draw(wxClientDC& drawC) 
+{	
+    wxPoint points[3];
+
+    points[0] = wxPoint(m_p1.GetX(),m_p1.GetY());
+    points[1] = wxPoint(m_p2.GetX(),m_p2.GetY());
+    points[2] = wxPoint(m_p3.GetX(),m_p3.GetY());
+
+    drawC.DrawPolygon(WXSIZEOF(points),points);
 }
 
 /*
