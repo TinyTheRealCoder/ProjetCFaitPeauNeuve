@@ -22,7 +22,7 @@ Forme::Forme()
     m_stroke_width = 1;
 }
 
-Forme::Forme(const std::string& label, int IndProfondeur, int red_fill, int green_fill, int blue_fill, int opacity_fill, int red_stroke, int green_stroke, int blue_stroke, int opacity_stroke, int stroke_width)
+Forme::Forme(const std::string& label, int IndProfondeur, int red_fill, int green_fill, int blue_fill, int opacity_fill, unsigned char red_stroke, unsigned char green_stroke, unsigned char blue_stroke, int opacity_stroke, int stroke_width)
 {
     cout << "Forme (avec un label et une profondeur)" << endl;
     // On alloue dynamiquement un label et une profondeur avec une chaine vide

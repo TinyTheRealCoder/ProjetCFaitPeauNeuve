@@ -23,7 +23,7 @@ Triangle::Triangle()
     m_triangleCount++;
 }
 
-Triangle::Triangle(const Point& p1, const Point& p2, const Point& p3, int IndProfond, const std::string& label, int red_fill, int green_fill, int blue_fill, int opacity_fill, int red_stroke, int green_stroke, int blue_stroke, int opacity_stroke, int stroke_width) : Forme(label, IndProfond, red_fill, blue_fill, green_fill, opacity_fill, red_stroke, blue_stroke, green_stroke, opacity_stroke, stroke_width)
+Triangle::Triangle(const Point& p1, const Point& p2, const Point& p3, int IndProfond, const std::string& label, int red_fill, int green_fill, int blue_fill, int opacity_fill, unsigned char red_stroke, unsigned char green_stroke, unsigned char blue_stroke, int opacity_stroke, int stroke_width) : Forme(label, IndProfond, red_fill, blue_fill, green_fill, opacity_fill, red_stroke, blue_stroke, green_stroke, opacity_stroke, stroke_width)
 {
     std::cout << "Triangle (riche)" << std::endl;
     m_triangleCount++;

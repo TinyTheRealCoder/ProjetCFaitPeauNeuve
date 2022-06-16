@@ -12,8 +12,8 @@ class Rectangle : public Forme
 {
 public:                                     // interface publique de la classe
     // Ici on rajoute une label
-    Rectangle(int x, int y, int w, int h, int IndProfond, const std::string& label, int red_fill, int green_fill, int blue_fill, int opacity_fill, int red_stroke, int green_stroke, int blue_stroke, int opacity_stroke, int stroke_width);  // constructeur
-    Rectangle(const Point& p, int w, int h, int IndProfond, const std::string& label, int red_fill, int green_fill, int blue_fill, int opacity_fill, int red_stroke, int green_stroke, int blue_stroke, int opacity_stroke, int stroke_width);// constructeur
+    Rectangle(int x, int y, int w, int h, int IndProfond, const std::string& label, int red_fill, int green_fill, int blue_fill, int opacity_fill, unsigned char red_stroke, unsigned char green_stroke, unsigned char blue_stroke, int opacity_stroke, int stroke_width);  // constructeur
+    Rectangle(const Point& p, int w, int h, int IndProfond, const std::string& label, int red_fill, int green_fill, int blue_fill, int opacity_fill, unsigned char red_stroke, unsigned char green_stroke, unsigned char blue_stroke, int opacity_stroke, int stroke_width);// constructeur
     ~Rectangle();                           // destructeur
 
     // Setters

@@ -14,7 +14,7 @@ public:
     // Pour aller au bout du raisonnement, le passage par r�f�rence const est plus
     // rapide et plus s�r (pas de modification possible des objets, pas de copies inutiles)
     Triangle();
-    Triangle(const Point& p1, const Point& p2, const Point& p3, int IndProfond, const std::string& label, int red_fill, int green_fill, int blue_fill, int opacity_fill, int red_stroke, int green_stroke, int blue_stroke, int opacity_stroke, int stroke_width);
+    Triangle(const Point& p1, const Point& p2, const Point& p3, int IndProfond, const std::string& label, int red_fill, int green_fill, int blue_fill, int opacity_fill, unsigned char red_stroke, unsigned char green_stroke, unsigned char blue_stroke, int opacity_stroke, int stroke_width);
     Triangle(const Triangle &other);
 
     // Destructeur virtuel

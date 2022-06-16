@@ -24,7 +24,7 @@ class Forme
 public:
     // Construction/Destruction
     Forme();
-    Forme(const std::string& label, int IndProfondeur, int red_fill, int green_fill, int blue_fill, int opacity_fill, int red_stroke, int green_stroke, int blue_stroke, int opacity_stroke, int stroke_width);    // Avec une string
+    Forme(const std::string& label, int IndProfondeur, int red_fill, int green_fill, int blue_fill, int opacity_fill, unsigned char red_stroke, unsigned char green_stroke, unsigned char blue_stroke, int opacity_stroke, int stroke_width);    // Avec une string
     Forme(const Forme& other);          // Construction par recopie
     virtual ~Forme();
 

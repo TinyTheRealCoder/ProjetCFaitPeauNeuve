@@ -13,7 +13,7 @@ unsigned int Cercle::m_circleCount = 0;
 
 // Constructeur riche. On appelle une version sp�cifique du construceur
 // de Forme et on initilise le centre et le radius de m�me
-Cercle::Cercle(Point centre, int radius, int IndProfond, string label, int red_fill, int green_fill, int blue_fill, int opacity_fill, int red_stroke, int green_stroke, int blue_stroke, int opacity_stroke, int stroke_width) :
+Cercle::Cercle(Point centre, int radius, int IndProfond, string label, int red_fill, int green_fill, int blue_fill, int opacity_fill, unsigned char red_stroke, unsigned char green_stroke, unsigned char blue_stroke, int opacity_stroke, int stroke_width) :
     Forme(label, IndProfond, red_fill, blue_fill, green_fill, opacity_fill, red_stroke, blue_stroke, green_stroke, opacity_stroke, stroke_width),
     m_center(centre),
     m_radius(radius)
@@ -78,5 +78,5 @@ Cercle &Cercle::operator=(const Cercle &other)
 std::string Cercle::Display()
 //-------------------------------------------
 {
-    return "<circle cx=\"" + std::to_string(m_center.GetX()) + "\" cy=\"" + std::to_string(m_center.GetY()) + "\" r=\"" + std::to_string(m_radius) + "\" stroke=\"rgba(" +std::to_string(m_red_stroke)+ "," +std::to_string(m_green_stroke)+ "," +std::to_string(m_blue_stroke)+ "," +std::to_string(m_opacity_stroke) + "\" stroke-line=\"" + std::to_string(m_stroke_width)  +"\" fill=\"\" >";
+    return "<circle cx=\"" + std::to_string(m_center.GetX()) + "\" cy=\"" + std::to_string(m_center.GetY()) + "\" r=\"" + std::to_string(m_radius) + "\" stroke=\"rgba(" +std::to_string(m_red_stroke)+ "," +std::to_string(m_green_stroke)+ "," +std::to_string(m_blue_stroke)+ "," +std::to_string(m_opacity_stroke) + ")\" stroke-line=\"" + std::to_string(m_stroke_width)  +"\" fill=\"rgba(" +std::to_string(m_red_fill)+ "," +std::to_string(m_green_fill)+ "," +std::to_string(m_blue_fill)+ "," +std::to_string(m_opacity_fill) + ")\" >";
 }

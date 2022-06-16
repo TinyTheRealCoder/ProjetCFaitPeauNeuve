@@ -11,7 +11,7 @@ public:
     // Construction par d�faut, par copie, avec param�tres
     Cercle();
     Cercle(const Cercle &other);
-    Cercle(Point centre, int radius, int IndProfond, std::string label, int red_fill, int green_fill, int blue_fill, int opacity_fill, int red_stroke, int green_stroke, int blue_stroke, int opacity_stroke, int stroke_width);
+    Cercle(Point centre, int radius, int IndProfond, std::string label, int red_fill, int green_fill, int blue_fill, int opacity_fill, unsigned char red_stroke, unsigned char green_stroke, unsigned char blue_stroke, int opacity_stroke, int stroke_width);
 
     // Destructeur virtuel car on peut d�river cette classe
     ~Cercle();

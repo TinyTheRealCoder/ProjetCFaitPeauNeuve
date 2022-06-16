@@ -896,9 +896,9 @@ void MonControleur::AddRectangle(){
 	int opa_border = frame->GetControlPanel()->GetSliderBorderOpacity() ;
 	int opa_width = frame->GetControlPanel()->GetSliderBorderWidth() ;
 
-	int bor_red = std::stoul(frame->GetControlPanel()->GetColPicked().Red(), nullptr, 16);
-	int bor_blue = std::stoul(frame->GetControlPanel()->GetColPicked().Blue(), nullptr, 16);
-	int bor_green = std::stoul(frame->GetControlPanel()->GetColPicked().Green(), nullptr, 16);
+	unsigned char bor_red = frame->GetControlPanel()->GetColPicked().Red();
+	unsigned char bor_blue = frame->GetControlPanel()->GetColPicked().Blue();
+	unsigned char bor_green = frame->GetControlPanel()->GetColPicked().Green();
 
 	const Point* p1 = new Point(frame->GetPts(0, true), frame->GetPts(0, false));
 	dessin->addVector(new Rectangle (*p1, frame->GetPts(1, true)-frame->GetPts(0, true), frame->GetPts(1, false)-frame->GetPts(0, false), profondId, "Rectangle", col_red, col_blue, col_green, transparency, bor_red, bor_blue, bor_green, opa_border, opa_width));
@@ -915,9 +915,9 @@ void MonControleur::AddLigne(){
 	int opa_border = frame->GetControlPanel()->GetSliderBorderOpacity() ;
 	int opa_width = frame->GetControlPanel()->GetSliderBorderWidth() ;
 
-	int bor_red = std::stoul(frame->GetControlPanel()->GetColPicked().Red(), nullptr, 16);
-	int bor_blue = std::stoul(frame->GetControlPanel()->GetColPicked().Blue(), nullptr, 16);
-	int bor_green = std::stoul(frame->GetControlPanel()->GetColPicked().Green(), nullptr, 16);
+	unsigned char bor_red = frame->GetControlPanel()->GetColPicked().Red();
+	unsigned char bor_blue = frame->GetControlPanel()->GetColPicked().Blue();
+	unsigned char bor_green = frame->GetControlPanel()->GetColPicked().Green();
 
 	const Point* p1 = new Point(frame->GetPts(0, true), frame->GetPts(0, false));
 	const Point* p2 = new Point(frame->GetPts(1, true), frame->GetPts(1, false));
@@ -935,9 +935,9 @@ void MonControleur::AddCercle(){
 	int opa_border = frame->GetControlPanel()->GetSliderBorderOpacity() ;
 	int opa_width = frame->GetControlPanel()->GetSliderBorderWidth() ;
 
-	/*int bor_red = std::stoul(frame->GetControlPanel()->GetColPicked().Red(), nullptr, 16);
-	int bor_blue = std::stoul(frame->GetControlPanel()->GetColPicked().Blue(), nullptr, 16);
-	int bor_green = std::stoul(frame->GetControlPanel()->GetColPicked().Green(), nullptr, 16);*/
+	unsigned char bor_red = frame->GetControlPanel()->GetColPicked().Red();
+	unsigned char bor_blue = frame->GetControlPanel()->GetColPicked().Blue();
+	unsigned char bor_green = frame->GetControlPanel()->GetColPicked().Green();
 
 	const Point* p1 = new Point(frame->GetPts(0, true), frame->GetPts(0, false));
 	const Point* p2 = new Point(frame->GetPts(1, true), frame->GetPts(1, false));
@@ -956,9 +956,9 @@ void MonControleur::AddTriangle(){
 	int opa_border = frame->GetControlPanel()->GetSliderBorderOpacity() ;
 	int opa_width = frame->GetControlPanel()->GetSliderBorderWidth() ;
 
-	int bor_red = std::stoul(frame->GetControlPanel()->GetColPicked().Red(), nullptr, 16);
-	int bor_blue = std::stoul(frame->GetControlPanel()->GetColPicked().Blue(), nullptr, 16);
-	int bor_green = std::stoul(frame->GetControlPanel()->GetColPicked().Green(), nullptr, 16);
+	int bor_red = frame->GetControlPanel()->GetColPicked().Red();
+	int bor_blue = frame->GetControlPanel()->GetColPicked().Blue();
+	int bor_green = frame->GetControlPanel()->GetColPicked().Green();
 
 	const Point* p1 = new Point(frame->GetPts(0, true), frame->GetPts(0, false));
 	const Point* p2 = new Point(frame->GetPts(1, true), frame->GetPts(1, false));
