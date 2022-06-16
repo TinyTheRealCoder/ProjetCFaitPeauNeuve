@@ -12,11 +12,11 @@ using namespace std;
 unsigned int Rectangle::m_rectCount = 0;
 
 //-------------------------------------------
-Rectangle::Rectangle(int x, int y, int w, int h, int IndProfond, const std::string& label, int red_fill, int green_fill, int blue_fill, std::string stroke_color, int stroke_width) :
+Rectangle::Rectangle(int x, int y, int w, int h, int IndProfond, const std::string& label, int red_fill, int green_fill, int blue_fill, int opacity_fill, int red_stroke, int green_stroke, int blue_stroke, int opacity_stroke, int stroke_width) :
 
     // Appel du constructeur de Forme avec un label
 
-    Forme(label, IndProfond, red_fill, blue_fill, green_fill, stroke_color, stroke_width)
+    Forme(label, IndProfond, red_fill, blue_fill, green_fill, opacity_fill, red_stroke, blue_stroke, green_stroke, opacity_stroke, stroke_width)
     
 //-------------------------------------------
 // attention, cette version appelle le constructeur par d�faut de Point
@@ -31,8 +31,8 @@ Rectangle::Rectangle(int x, int y, int w, int h, int IndProfond, const std::stri
 }
 
 //-------------------------------------------
-Rectangle::Rectangle(const Point& p, int w, int h, int IndProfond, const std::string& label, int red_fill, int green_fill, int blue_fill, std::string stroke_color, int stroke_width) :
-    Forme(label, IndProfond, red_fill, blue_fill, green_fill, stroke_color, stroke_width),
+Rectangle::Rectangle(const Point& p, int w, int h, int IndProfond, const std::string& label, int red_fill, int green_fill, int blue_fill, int opacity_fill, int red_stroke, int green_stroke, int blue_stroke, int opacity_stroke, int stroke_width) :
+    Forme(label, IndProfond, red_fill, blue_fill, green_fill, opacity_fill, red_stroke, blue_stroke, green_stroke, opacity_stroke, stroke_width),
     m_corner(p.GetX(),p.GetY()),
     m_w(w),
     m_h(h)

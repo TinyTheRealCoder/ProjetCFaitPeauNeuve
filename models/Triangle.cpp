@@ -23,7 +23,7 @@ Triangle::Triangle()
     m_triangleCount++;
 }
 
-Triangle::Triangle(const Point& p1, const Point& p2, const Point& p3, int IndProfond, const std::string& label) : Forme(label, IndProfond)
+Triangle::Triangle(const Point& p1, const Point& p2, const Point& p3, int IndProfond, const std::string& label, int red_fill, int green_fill, int blue_fill, int opacity_fill, int red_stroke, int green_stroke, int blue_stroke, int opacity_stroke, int stroke_width) : Forme(label, IndProfond, red_fill, blue_fill, green_fill, opacity_fill, red_stroke, blue_stroke, green_stroke, opacity_stroke, stroke_width)
 {
     std::cout << "Triangle (riche)" << std::endl;
     m_triangleCount++;
@@ -40,7 +40,7 @@ Triangle::~Triangle()
 
 Triangle::Triangle(const Triangle &other) :
     // Appel du contructeur de Forme avec un label
-    Forme(other.GetLabel(), other.GetIndProfond()),
+    Forme(other.GetLabel(), other.GetIndProfond(), other.m_red_fill, other.m_blue_fill, other.m_green_fill, other.m_opacity_fill, other.m_red_stroke, other.m_blue_stroke, other.m_green_stroke, other.m_opacity_stroke, other.m_stroke_width),
     // Appel des 3 constructeurs par copies des Points
     m_p1(other.m_p1),
     m_p2(other.m_p2),

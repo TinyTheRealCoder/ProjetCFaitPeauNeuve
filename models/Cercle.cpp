@@ -13,8 +13,8 @@ unsigned int Cercle::m_circleCount = 0;
 
 // Constructeur riche. On appelle une version sp�cifique du construceur
 // de Forme et on initilise le centre et le radius de m�me
-Cercle::Cercle(Point centre, int radius, int IndProfond, string label, int red_fill, int green_fill, int blue_fill, std::string stroke_color, int stroke_width) :
-    Forme(label, IndProfond, red_fill, blue_fill, green_fill, stroke_color, stroke_width),
+Cercle::Cercle(Point centre, int radius, int IndProfond, string label, int red_fill, int green_fill, int blue_fill, int opacity_fill, int red_stroke, int green_stroke, int blue_stroke, int opacity_stroke, int stroke_width) :
+    Forme(label, IndProfond, red_fill, blue_fill, green_fill, opacity_fill, red_stroke, blue_stroke, green_stroke, opacity_stroke, stroke_width),
     m_center(centre),
     m_radius(radius)
 {
@@ -24,6 +24,8 @@ Cercle::Cercle(Point centre, int radius, int IndProfond, string label, int red_f
 
 void Cercle::draw(wxClientDC& drawC) 
 {	
+    drawC.SetBrush(wxColour(m_red_fill, m_green_fill, m_blue_fill, m_opacity_fill));
+    drawC.SetPen(wxColour(m_red_stroke, m_green_stroke, m_blue_stroke, m_opacity_stroke));
     drawC.DrawCircle(wxPoint(m_center.GetX(),m_center.GetY()),(m_radius));
 }
 /* Alternative
@@ -47,7 +49,7 @@ Cercle::Cercle()
 }
 
 // constructeur de copie
-Cercle::Cercle(const Cercle &other) : Forme(other.GetLabel(), other.GetIndProfond()), m_center(other.m_center), m_radius(other.m_radius)
+Cercle::Cercle(const Cercle &other) : Forme(other.GetLabel(), other.GetIndProfond(), other.m_red_fill, other.m_blue_fill, other.m_green_fill, other.m_opacity_fill, other.m_red_stroke, other.m_blue_stroke, other.m_green_stroke, other.m_opacity_stroke, other.m_stroke_width), m_center(other.m_center), m_radius(other.m_radius)
 {
     cout << "Cercle (copie)" << endl;
     m_circleCount++;

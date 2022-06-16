@@ -18,7 +18,7 @@ Ligne::Ligne() : Forme()
 
 //Constructor
 
-Ligne::Ligne(const Point& p1Tmp, const Point& p2Tmp, int IndProfond, const std::string& label, int red_fill, int green_fill, int blue_fill, std::string stroke_color, int stroke_width) : Forme(label, IndProfond, red_fill, blue_fill, green_fill, stroke_color, stroke_width)
+Ligne::Ligne(const Point& p1Tmp, const Point& p2Tmp, int IndProfond, const std::string& label, int red_fill, int green_fill, int blue_fill, int opacity_fill, int red_stroke, int green_stroke, int blue_stroke, int opacity_stroke, int stroke_width) : Forme(label, IndProfond, red_fill, blue_fill, green_fill, opacity_fill, red_stroke, blue_stroke, green_stroke, opacity_stroke, stroke_width)
 {
     p1 = p1Tmp;
     p2 = p2Tmp;
@@ -30,7 +30,7 @@ Ligne::Ligne(const Point& p1Tmp, const Point& p2Tmp, int IndProfond, const std::
 
 //Copy constructor
 
-Ligne::Ligne(const Ligne& copy): Forme(copy.GetLabel(), copy.GetIndProfond())
+Ligne::Ligne(const Ligne& copy): Forme(copy.GetLabel(), copy.GetIndProfond(), copy.m_red_fill, copy.m_blue_fill, copy.m_green_fill, copy.m_opacity_fill, copy.m_red_stroke, copy.m_blue_stroke, copy.m_green_stroke, copy.m_opacity_stroke, copy.m_stroke_width)
 {
     p1.SetX(copy.p1.GetX());
     p2.SetX(copy.p2.GetX());

@@ -605,11 +605,14 @@ void MyDrawingPanel::SaveFile(wxString fileName)
 		stringstream ss;
 
 		//Entete du fichier
-		ss << "<svg width=\""<< monControleur->GetFrame()->m_width << "\" height=\"" << "\">" ;
+		ss << "<svg width=\""<< monControleur->GetFrame()->m_width << "\" height=\"" << "\">" << endl;
 
 		//On remplie avec les formes
 		//ss << "<rect width=\"100%\" height=\"100%\" fill=\"red\" />";
 		//RAJOUT DE METHODE TOSTRING POUR CHAQUE FORME
+		for(Forme* forme : monControleur->dessin->getVector()){
+			ss << forme->Display() << endl;
+		}
 
 		//Fin du svg
 		ss << "</svg>";
@@ -840,30 +843,55 @@ void MonControleur::SetPts(int stepPt, int x, int y){
 } 
 
 void MonControleur::AddRectangle(){
+
+	int transparency = frame->GetControlPanel()->GetSliderValue() ;
+	int col_red = frame->GetControlPanel()->GetSliderColorREDValue() ;
+	int col_green = frame->GetControlPanel()->GetSliderColorGREENValue() ;
+	int col_blue = frame->GetControlPanel()->GetSliderColorBLUEValue() ;
+
 	const Point* p1 = new Point(frame->GetPts(0, true), frame->GetPts(0, false));
-	dessin->addVector(new Rectangle (*p1, frame->GetPts(1, true)-frame->GetPts(0, true), frame->GetPts(1, false)-frame->GetPts(0, false), profondId, "Rectangle"));
+	dessin->addVector(new Rectangle (*p1, frame->GetPts(1, true)-frame->GetPts(0, true), frame->GetPts(1, false)-frame->GetPts(0, false), profondId, "Rectangle", col_red, col_blue, col_green, transparency, col_red, col_blue, col_green, transparency, 1));
 	profondId++;
 }
 
 void MonControleur::AddLigne(){
+
+	int transparency = frame->GetControlPanel()->GetSliderValue() ;
+	int col_red = frame->GetControlPanel()->GetSliderColorREDValue() ;
+	int col_green = frame->GetControlPanel()->GetSliderColorGREENValue() ;
+	int col_blue = frame->GetControlPanel()->GetSliderColorBLUEValue() ;
+
 	const Point* p1 = new Point(frame->GetPts(0, true), frame->GetPts(0, false));
 	const Point* p2 = new Point(frame->GetPts(1, true), frame->GetPts(1, false));
-	dessin->addVector(new Ligne (*p1, *p2, profondId, "Ligne"));
+	dessin->addVector(new Ligne (*p1, *p2, profondId, "Ligne", col_red, col_blue, col_green, transparency, col_red, col_blue, col_green, transparency, 1));
 	profondId++;
 }
 
 void MonControleur::AddCercle(){
+
+	int transparency = frame->GetControlPanel()->GetSliderValue() ;
+	int col_red = frame->GetControlPanel()->GetSliderColorREDValue() ;
+	int col_green = frame->GetControlPanel()->GetSliderColorGREENValue() ;
+	int col_blue = frame->GetControlPanel()->GetSliderColorBLUEValue() ;
+
 	const Point* p1 = new Point(frame->GetPts(0, true), frame->GetPts(0, false));
 	const Point* p2 = new Point(frame->GetPts(1, true), frame->GetPts(1, false));
-	dessin->addVector(new Cercle (*p1, sqrt(pow(monControleur->GetFrame()->m_PointTmp2->x-monControleur->GetFrame()->m_PointTmp1->x, 2) + pow(monControleur->GetFrame()->m_PointTmp2->y-monControleur->GetFrame()->m_PointTmp1->y, 2)), profondId, "Cercle"));
+	dessin->addVector(new Cercle (*p1, sqrt(pow(monControleur->GetFrame()->m_PointTmp2->x-monControleur->GetFrame()->m_PointTmp1->x, 2) + pow(monControleur->GetFrame()->m_PointTmp2->y-monControleur->GetFrame()->m_PointTmp1->y, 2)), profondId, "Cercle", col_red, col_blue, col_green, transparency, col_red, col_blue, col_green, transparency, 1));
 	profondId++;
 }
 
 void MonControleur::AddTriangle(){
+
+
+	int transparency = frame->GetControlPanel()->GetSliderValue() ;
+	int col_red = frame->GetControlPanel()->GetSliderColorREDValue() ;
+	int col_green = frame->GetControlPanel()->GetSliderColorGREENValue() ;
+	int col_blue = frame->GetControlPanel()->GetSliderColorBLUEValue() ;
+
 	const Point* p1 = new Point(frame->GetPts(0, true), frame->GetPts(0, false));
 	const Point* p2 = new Point(frame->GetPts(1, true), frame->GetPts(1, false));
 	const Point* p3 = new Point(frame->GetPts(2, true), frame->GetPts(2, false));
-	dessin->addVector(new Triangle(*p1, *p2, *p3, profondId, "Triangle"));
+	dessin->addVector(new Triangle(*p1, *p2, *p3, profondId, "Triangle", col_red, col_blue, col_green, transparency, col_red, col_blue, col_green, transparency, 1));
 	profondId++;
 }
 
