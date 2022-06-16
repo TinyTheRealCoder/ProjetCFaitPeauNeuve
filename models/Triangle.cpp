@@ -90,5 +90,5 @@ void Triangle::Display() const
 std::string Triangle::Display()
 //-------------------------------------------
 {
-    return "<polygon points=\"" + std::to_string(m_p1.GetX()) + " " + std::to_string(m_p1.GetY()) + "," + std::to_string(m_p2.GetX()) + " " + std::to_string(m_p2.GetY()) + "," + std::to_string(m_p3.GetX()) + " " + std::to_string(m_p3.GetY()) + "\" stroke = \"\" stroke-line=\"\" fill=\"\" >";
+    return "<polygon points=\"" + std::to_string(m_p1.GetX()) + " " + std::to_string(m_p1.GetY()) + "," + std::to_string(m_p2.GetX()) + " " + std::to_string(m_p2.GetY()) + "," + std::to_string(m_p3.GetX()) + " " + std::to_string(m_p3.GetY()) + "\" stroke=\"rgba(" +std::to_string(m_red_stroke)+ "," +std::to_string(m_green_stroke)+ "," +std::to_string(m_blue_stroke)+ "," +std::to_string(m_opacity_stroke) + ")\" stroke-line=\"" + std::to_string(m_stroke_width)  +"\" fill=\"rgba(" +std::to_string(m_red_fill)+ "," +std::to_string(m_green_fill)+ "," +std::to_string(m_blue_fill)+ "," +std::to_string(m_opacity_fill) + ")\" >";
 }

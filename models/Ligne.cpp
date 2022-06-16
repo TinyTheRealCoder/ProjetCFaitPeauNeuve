@@ -105,7 +105,7 @@ std::string Ligne::Display()
 {
     // On affiche le nom
     
-    return "<line x1=\"" + std::to_string(p1.GetX()) + "\" y1=\"" + std::to_string(p1.GetY()) + "\" x2=\"" + std::to_string(p2.GetX()) + "\" x2=\"" + std::to_string(p2.GetY()) + " \" >";
+    return "<line x1=\"" + std::to_string(p1.GetX()) + "\" y1=\"" + std::to_string(p1.GetY()) + "\" x2=\"" + std::to_string(p2.GetX()) + "\" x2=\"" + std::to_string(p2.GetY()) + "\" stroke=\"rgba(" +std::to_string(m_red_stroke)+ "," +std::to_string(m_green_stroke)+ "," +std::to_string(m_blue_stroke)+ "," +std::to_string(m_opacity_stroke) + ")\" stroke-line=\"" + std::to_string(m_stroke_width)  +"\" fill=\"rgba(" +std::to_string(m_red_fill)+ "," +std::to_string(m_green_fill)+ "," +std::to_string(m_blue_fill)+ "," +std::to_string(m_opacity_fill) + ")\" >";
     
 }
 

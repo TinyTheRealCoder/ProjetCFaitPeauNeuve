@@ -111,7 +111,7 @@ int Rectangle::GetHeight() const
 std::string Rectangle::Display()
 //-------------------------------------------
 {
-    return "<rect x=\"" + std::to_string(m_corner.GetX()) + "\" y=\"" + std::to_string(m_corner.GetY()) + "\" width=\"" + std::to_string(m_w) + "\" height=\"" + std::to_string(m_h) + "\" stroke=\"\" stroke-line=\"\" fill=\"\" >";
+    return "<rect x=\"" + std::to_string(m_corner.GetX()) + "\" y=\"" + std::to_string(m_corner.GetY()) + "\" width=\"" + std::to_string(m_w) + "\" height=\"" + std::to_string(m_h) + + "\" stroke=\"rgba(" +std::to_string(m_red_stroke)+ "," +std::to_string(m_green_stroke)+ "," +std::to_string(m_blue_stroke)+ "," +std::to_string(m_opacity_stroke) + ")\" stroke-line=\"" + std::to_string(m_stroke_width)  +"\" fill=\"rgba(" +std::to_string(m_red_fill)+ "," +std::to_string(m_green_fill)+ "," +std::to_string(m_blue_fill)+ "," +std::to_string(m_opacity_fill) + ")\" >";
 }
 
 //-------------------------------------------
