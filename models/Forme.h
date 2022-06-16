@@ -38,6 +38,7 @@ public:
     void SetIndProfond(int IndProfondeur);
     int GetIndProfond() const; 
     virtual void draw(wxClientDC& drawC){};
+    virtual bool IsInside(int mouse_x, int mouse_y){ return false; };
 
     //Affiche de la forme
     virtual std::string Display() {

@@ -28,7 +28,7 @@ public:                                     // interface publique de la classe
 
     // Fonction utilitaires
     void Move(int dX, int dY);                  // d�place le rectangle
-    bool IsInside(const Rectangle &r) const;    // v�rifie l'inclusion
+    virtual bool IsInside(int mouse_x, int mouse_y) override;    // v�rifie l'inclusion
 
     //MODIFY
     virtual std::string Display() override;

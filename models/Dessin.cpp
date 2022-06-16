@@ -28,3 +28,8 @@ void Dessin::addVector(Forme* forme)
 {
  this->dessins.push_back(forme);
 }
+
+void Dessin::removeVector(int i)
+{
+ this->dessins.erase(dessins.begin()+i);
+}

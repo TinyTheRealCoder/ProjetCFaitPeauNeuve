@@ -16,6 +16,7 @@ public:
 
     std::vector<Forme*> getVector();
     void addVector(Forme* forme);
+    void removeVector(int i);
 
 private:
 

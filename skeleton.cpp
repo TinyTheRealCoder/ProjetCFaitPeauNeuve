@@ -83,6 +83,7 @@ enum
 	ID_LOAD,
 	ID_SAVE,
 	ID_BUTTON1,
+	ID_BUTTON_DELETE,
 	ID_BUTTON_LINE,
 	ID_BUTTON_RECT,
 	ID_BUTTON_CIRCLE,
@@ -117,6 +118,7 @@ class MonControleur{
 	void AddLigne();
 	void AddCercle();
 	void AddTriangle();
+	void DeleteShape(int x, int y);
 	MyFrame* GetFrame();
 	void AfficheFormeSaved(wxClientDC& dc);
 
@@ -267,6 +269,11 @@ MyControlPanel::MyControlPanel(wxWindow *parent) : wxPanel(parent)
 	y = WIDGET_Y0 ;
 	wxStaticText* textOutils = new wxStaticText(this, wxID_ANY, wxT("Outils"), wxPoint(10, y)) ;
 	
+	//Ajout d'un bouton (Gomme)
+	y += WIDGET_Y_SPACE_BTN ; //Emplacement dans le panneau en fonction de la verticalité
+	m_button = new wxButton(this, ID_BUTTON_DELETE, wxT("Gomme"), wxPoint(10, y)) ;
+	Bind(wxEVT_BUTTON, &MyControlPanel::OnButton, this, ID_BUTTON_DELETE) ;
+
 	//Ajout d'un bouton (Pinceau)
 	y += WIDGET_Y_SPACE_BTN ; //Emplacement dans le panneau en fonction de la verticalité
 	m_button = new wxButton(this, ID_BUTTON_LINE, wxT("Ligne"), wxPoint(10, y)) ;
@@ -370,6 +377,10 @@ void MyControlPanel::OnButton(wxCommandEvent &event)
 
 	//On affiche quel btn viens d'etre selectioné avec une pop up
 	switch(monControleur->btnSelected){
+		case ID_BUTTON_DELETE :
+			//A chaque nouveau ligne on definit son action
+			wxMessageBox(wxT("Gomme activé")) ;
+			break;
 		case ID_BUTTON_LINE :
 			//A chaque nouveau ligne on definit son action
 			wxMessageBox(wxT("Ligne activé")) ;
@@ -409,21 +420,24 @@ void MyControlPanel::OnSlider(wxScrollEvent &event)
 	int col_red = frame->GetControlPanel()->GetSliderColorREDValue() ;
 	int col_green = frame->GetControlPanel()->GetSliderColorGREENValue() ;
 	int col_blue = frame->GetControlPanel()->GetSliderColorBLUEValue() ;
+	int transparency = frame->GetControlPanel()->GetSliderValue() ;
 	wxClientDC dc(this);
 	dc.SetBrush(*wxWHITE);
+	dc.SetPen(*wxLIGHT_GREY);
 	dc.DrawRectangle(wxPoint(100,360), wxSize(20,20));
 
 	dc.SetBrush(*wxLIGHT_GREY);
 	dc.DrawRectangle(wxPoint(100,360), wxSize(5,5));
-	dc.DrawRectangle(wxPoint(100,370), wxSize(5,5));
+	dc.DrawRectangle(wxPoint(110,360), wxSize(5,5));
 	dc.DrawRectangle(wxPoint(105,365), wxSize(5,5));
-	dc.DrawRectangle(wxPoint(105,375), wxSize(5,5));
+	dc.DrawRectangle(wxPoint(115,365), wxSize(5,5));
+	dc.DrawRectangle(wxPoint(100,370), wxSize(5,5));
 	dc.DrawRectangle(wxPoint(110,370), wxSize(5,5));
-	dc.DrawRectangle(wxPoint(110,380), wxSize(5,5));
+	dc.DrawRectangle(wxPoint(105,375), wxSize(5,5));
 	dc.DrawRectangle(wxPoint(115,375), wxSize(5,5));
-	dc.DrawRectangle(wxPoint(115,385), wxSize(5,5));
 
-	dc.SetBrush(wxColour(col_red,col_green,col_blue,255));
+	dc.SetBrush(wxColour(col_red,col_green,col_blue,transparency));
+	dc.SetPen(wxColour(0,0,0,0));
 	dc.DrawRectangle(wxPoint(100,360), wxSize(20,20));
 	frame->RefreshDrawing() ;	// update the drawing panel
 }
@@ -488,6 +502,10 @@ void MyDrawingPanel::OnMouseLeftDown(wxMouseEvent &event)
 
 	
 	switch(monControleur->btnSelected){
+		case ID_BUTTON_DELETE :
+			//A chaque nouvelle ligne on definit son action
+			monControleur->DeleteShape(m_onePoint.x, m_onePoint.y);
+			break;
 		case ID_BUTTON_LINE :
 			//A chaque nouvelle ligne on definit son action
 			if(monControleur->stepShape == 0){
@@ -984,6 +1002,18 @@ void MonControleur::AddTriangle(){
 	const Point* p3 = new Point(frame->GetPts(2, true), frame->GetPts(2, false));
 	dessin->addVector(new Triangle(*p1, *p2, *p3, profondId, "Triangle", col_red, col_blue, col_green, transparency, bor_red, bor_blue, bor_green, opa_border, opa_width));
 	profondId++;
+}
+
+void MonControleur::DeleteShape(int x, int y){
+	int i =0;    
+	for(int i = dessin->getVector().size() - 1; i >= 0; i--)
+    {
+		if(dessin->getVector()[i]->IsInside(x,y)){
+			dessin->removeVector(i);
+			break;
+		}
+		i++;
+    }
 }
 
 MyFrame* MonControleur::GetFrame(){

@@ -132,33 +132,25 @@ int Rectangle::GetRectCount()
 }
 
 //-------------------------------------------
-bool Rectangle::IsInside(const Rectangle &r) const
+bool Rectangle::IsInside(int mouse_x, int mouse_y)
 //-------------------------------------------
-// retourne true si le rectangle est enti�rement � l'int�rieur (inclus) dans le Rectangle r
-// si r1 est inclus dans r2
 {
-    // On r�cup�re les valeurs des points du rectangle
-    int x1r1 = GetCorner().GetX();
-    int y1r1 = GetCorner().GetY();
-    int x2r1 = x1r1 + m_w;
-    int y2r1 = y1r1 + m_h;
-    int x1r2 = r.GetCorner().GetX();
-    int y1r2 = r.GetCorner().GetY();
-    int x2r2 = x1r2 + r.GetWidth();
-    int y2r2 = y1r2 + r.GetHeight();
+    int x_start = GetCorner().GetX();
+    int y_start = GetCorner().GetY();
+    int x_end = GetCorner().GetX() + m_w;
+    int y_end = GetCorner().GetY() + m_h;
 
-    // On v�rifier que r est inclus dans ce Rectangle (this)
-    return ((x1r1 > x1r2 && x1r1 < x2r2) || (x1r1 < x1r2 && x1r1 > x2r2)) &&
-           ((x1r1 > x1r2 && x1r1 < x2r2) || (x1r1 < x1r2 && x1r1 > x2r2));
+    if(x_start > x_end){
+        int tmp = x_start;
+        x_start = x_end;
+        x_end = tmp;
+    }
+
+    if(y_start > y_end){
+        int tmp = y_start;
+        y_start = y_end;
+        y_end = tmp;
+    }
+
+    return (mouse_x >= x_start && mouse_x <= x_end && mouse_y >= y_start && mouse_y <= y_end);
 }
-
-// On red�finit les m�thodes virtuelles pour les affiner
-/*float Rectangle::Surface() const
-{
-    return (float)(m_w * m_h);
-}
-
-float Rectangle::Perimeter() const
-{
-    return (float)(2*m_w + 2*m_h);;
-}*/
