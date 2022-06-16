@@ -13,8 +13,8 @@ unsigned int Cercle::m_circleCount = 0;
 
 // Constructeur riche. On appelle une version sp�cifique du construceur
 // de Forme et on initilise le centre et le radius de m�me
-Cercle::Cercle(Point centre, int radius, int IndProfond, string label) :
-    Forme(label, IndProfond),
+Cercle::Cercle(Point centre, int radius, int IndProfond, string label, int red_fill, int green_fill, int blue_fill, std::string stroke_color, int stroke_width) :
+    Forme(label, IndProfond, red_fill, blue_fill, green_fill, stroke_color, stroke_width),
     m_center(centre),
     m_radius(radius)
 {

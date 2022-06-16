@@ -10,7 +10,7 @@ class Ligne : public Forme
 public:
     // Construction par défaut, par copie, avec paramètres
     Ligne();
-    Ligne(const Point& p1, const Point& p2, int IndProfond, const std::string& label);
+    Ligne(const Point& p1, const Point& p2, int IndProfond, const std::string& label, int red_fill, int green_fill, int blue_fill, std::string stroke_color, int stroke_width);
     Ligne(const Ligne& copy);
     
     // Destructeur virtuel car on peut dériver cette classe

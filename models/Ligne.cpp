@@ -18,7 +18,7 @@ Ligne::Ligne() : Forme()
 
 //Constructor
 
-Ligne::Ligne(const Point& p1Tmp, const Point& p2Tmp, int IndProfond, const std::string& label) : Forme (label, IndProfond)
+Ligne::Ligne(const Point& p1Tmp, const Point& p2Tmp, int IndProfond, const std::string& label, int red_fill, int green_fill, int blue_fill, std::string stroke_color, int stroke_width) : Forme(label, IndProfond, red_fill, blue_fill, green_fill, stroke_color, stroke_width)
 {
     p1 = p1Tmp;
     p2 = p2Tmp;

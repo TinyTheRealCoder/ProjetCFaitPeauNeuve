@@ -11,7 +11,7 @@ public:
     // Construction par d�faut, par copie, avec param�tres
     Cercle();
     Cercle(const Cercle &other);
-    Cercle(Point centre, int radius, int IndProfond, std::string label);
+    Cercle(Point centre, int radius, int IndProfond, std::string label, int red_fill, int green_fill, int blue_fill, std::string stroke_color, int stroke_width);
 
     // Destructeur virtuel car on peut d�river cette classe
     ~Cercle();
@@ -20,16 +20,12 @@ public:
     Cercle &operator=(const Cercle &other);
     
     void draw(wxClientDC& drawC) override;
-
-    // M�thodes virtuelles pour surcharger celles de la classe M�re
-    //virtual float Surface() const override;
-    //virtual float Perimeter() const override;
     
-    //MODIFY
+    //Mise en balise SVG
     virtual std::string Display() override;
     
 
-private:    // Could be protected
+private:    
     Point m_center;
     int m_radius;
 
