@@ -36,6 +36,13 @@
 #include <wx/file.h>
 #include <wx/bitmap.h>
 #include <bits/stdc++.h>
+
+#include <wx/frame.h>
+#include <wx/clrpicker.h>
+#include <wx/textctrl.h>
+#include <wx/panel.h>
+#include <wx/sizer.h>
+
 #include <string> 
 #include <cstdlib>
 #include <iostream>
@@ -54,8 +61,8 @@
 //------------------------------------------------------------------------
 // Some constants
 //------------------------------------------------------------------------
-#define APPLICATION_WIDTH		900
-#define APPLICATION_HEIGHT		800 
+#define APPLICATION_WIDTH		1200
+#define APPLICATION_HEIGHT		1000 
 #define WIDGET_PANEL_WIDTH		150
 #define WIDGET_Y0				30
 #define WIDGET_Y_STEP			70
@@ -84,6 +91,8 @@ enum
 	ID_SLIDER_RED,
 	ID_SLIDER_BLUE,
 	ID_SLIDER_GREEN,
+	ID_SLIDER_BORDER_OPACITY,
+	ID_SLIDER_BORDER_WIDTH,
 	ID_COLOUR_PICKER,
 	ID_CHECKBOX1
 };
@@ -178,6 +187,11 @@ public:
 	int GetSliderColorREDValue() {return m_slider_red->GetValue() ;} ;
 	int GetSliderColorGREENValue() {return m_slider_green->GetValue() ;} ;
 	int GetSliderColorBLUEValue() {return m_slider_blue->GetValue() ;} ;
+	int GetSliderBorderOpacity() {return m_slider_border_opacity->GetValue() ;} ;
+	int GetSliderBorderWidth() {return m_slider_border_width->GetValue() ;} ;
+
+	wxColour GetColPicked() {return colourPickerCtrl->GetColour() ;} ;
+
 	bool GetCheckBoxValue() {return m_checkBox->GetValue() ;} ;
 
 private:
@@ -189,7 +203,10 @@ private:
 	wxSlider* m_slider_red ;
 	wxSlider* m_slider_green ;
 	wxSlider* m_slider_blue ;
+	wxSlider* m_slider_border_opacity ;
+	wxSlider* m_slider_border_width ;
 	wxCheckBox* m_checkBox ;
+	wxColourPickerCtrl* colourPickerCtrl;
 };
 
 //------------------------------------------------------------------------
@@ -242,6 +259,10 @@ MyControlPanel::MyControlPanel(wxWindow *parent) : wxPanel(parent)
 	SetSize(wxRect(wxPoint(0,0), wxPoint(WIDGET_PANEL_WIDTH, h))) ;
 	SetBackgroundColour(*wxLIGHT_GREY) ;
 
+	//////////////////////////////////////////////////////////////////////////////////////////////
+	//TOOLS
+	//////////////////////////////////////////////////////////////////////////////////////////////
+
 	//Texte entete outils
 	y = WIDGET_Y0 ;
 	wxStaticText* textOutils = new wxStaticText(this, wxID_ANY, wxT("Outils"), wxPoint(10, y)) ;
@@ -269,8 +290,12 @@ MyControlPanel::MyControlPanel(wxWindow *parent) : wxPanel(parent)
 	y+= WIDGET_Y_SPACE_SLINE ;
 	wxStaticLine *sline1 = new wxStaticLine(this, wxID_ANY, wxPoint(20, y), wxSize(100,2));
 	
+	//////////////////////////////////////////////////////////////////////////////////////////////
+	//OPACITY BACKGROUND
+	//////////////////////////////////////////////////////////////////////////////////////////////
+
 	y+= WIDGET_Y_SPACE_TITLE ;
-	wxStaticText* text1 = new wxStaticText(this, wxID_ANY, wxT("Opacity"), wxPoint(10, y)) ;
+	wxStaticText* text1 = new wxStaticText(this, wxID_ANY, wxT("Opacité"), wxPoint(10, y)) ;
 	
 	y+= WIDGET_Y_SPACE_BTN ;
 	m_slider = new wxSlider(this, ID_SLIDER_TRANSPARENCY, 10, 2, 255, wxPoint(10, y), wxSize(100,20), wxSL_LABELS) ;
@@ -279,11 +304,12 @@ MyControlPanel::MyControlPanel(wxWindow *parent) : wxPanel(parent)
 	y+= WIDGET_Y_SPACE_SLINE ;
 	wxStaticLine *sline2 = new wxStaticLine(this, wxID_ANY, wxPoint(20, y), wxSize(100,2));
 	
+	//////////////////////////////////////////////////////////////////////////////////////////////
+	//COLOR BACKGROUND
+	//////////////////////////////////////////////////////////////////////////////////////////////
+
 	y+= WIDGET_Y_SPACE_TITLE ;
-	wxStaticText* textColor = new wxStaticText(this, wxID_ANY, wxT("Color"), wxPoint(10, y)) ;
-	//wxClientDC dc(this);	
-	//dc.SetBrush(wxColour(77,0,77,255));
-    //wxRect* rect_color = new wxRect(wxPoint(70,y), wxPoint(80, y+10));
+	wxStaticText* textColor = new wxStaticText(this, wxID_ANY, wxT("Couleur"), wxPoint(10, y)) ;
 
 	y+= WIDGET_Y_SPACE_BTN ;
 	m_slider_red = new wxSlider(this, ID_SLIDER_RED, 10, 2, 255, wxPoint(10, y), wxSize(100,20), wxSL_LABELS) ;
@@ -296,24 +322,39 @@ MyControlPanel::MyControlPanel(wxWindow *parent) : wxPanel(parent)
 	y+= WIDGET_Y_SPACE_BTN ;
 	m_slider_blue = new wxSlider(this, ID_SLIDER_BLUE, 10, 2, 255, wxPoint(10, y), wxSize(100,20), wxSL_LABELS) ;
 	Bind(wxEVT_SCROLL_THUMBTRACK, &MyControlPanel::OnSlider, this, ID_SLIDER_BLUE) ;
-	//https://www.wxishiko.com/wxWidgetsTutorials/wxcolourpickerctrl.html
-	
-	y+= WIDGET_Y_SPACE_BTN ;
+
+	y+= WIDGET_Y_SPACE_SLINE ;
 	wxStaticLine *sline3 = new wxStaticLine(this, wxID_ANY, wxPoint(20, y), wxSize(100,2));
 	
+	//////////////////////////////////////////////////////////////////////////////////////////////
+	//BORDURE
+	//////////////////////////////////////////////////////////////////////////////////////////////
+
+	y+= WIDGET_Y_SPACE_TITLE ;
+	wxStaticText* textLigne = new wxStaticText(this, wxID_ANY, wxT("Bordure"), wxPoint(10, y)) ;
+
+	y+= WIDGET_Y_SPACE_BTN ;
+    wxPanel* panel = new wxPanel(this, wxID_ANY, wxPoint(20, y), wxSize(100,50));
+    colourPickerCtrl = new wxColourPickerCtrl(panel, ID_COLOUR_PICKER);
+
+	y+= WIDGET_Y_SPACE_SLINE ;
+	wxStaticText* textLigneOpa = new wxStaticText(this, wxID_ANY, wxT("Opacité"), wxPoint(30, y)) ;
+
+	y+= WIDGET_Y_SPACE_BTN ;
+	m_slider_border_opacity = new wxSlider(this, ID_SLIDER_BORDER_OPACITY, 10, 2, 255, wxPoint(10, y), wxSize(100,20), wxSL_LABELS) ;
+	Bind(wxEVT_SCROLL_THUMBTRACK, &MyControlPanel::OnSlider, this, ID_SLIDER_BORDER_OPACITY) ;
+	
+	y+= WIDGET_Y_SPACE_SLINE ;
+	wxStaticText* textLigneWidth = new wxStaticText(this, wxID_ANY, wxT("Epaisseur"), wxPoint(30, y)) ;
+
+	y+= WIDGET_Y_SPACE_BTN ;
+	m_slider_border_width = new wxSlider(this, ID_SLIDER_BORDER_WIDTH, 10, 2, 255, wxPoint(10, y), wxSize(100,20), wxSL_LABELS) ;
+	Bind(wxEVT_SCROLL_THUMBTRACK, &MyControlPanel::OnSlider, this, ID_SLIDER_BORDER_WIDTH) ;
+
 	y+= WIDGET_Y_STEP ;
 	m_checkBox = new wxCheckBox(this, ID_CHECKBOX1, "Show (x,y)", wxPoint(10, y), wxSize(100,20)) ;
 	Bind(wxEVT_CHECKBOX, &MyControlPanel::OnCheckBox, this, ID_CHECKBOX1) ;	
 
-	MyFrame* frame = (MyFrame*)GetParent() ;
-	//int col_red = frame->GetControlPanel()->GetSliderColorREDValue() ;
-	//int col_green = frame->GetControlPanel()->GetSliderColorGREENValue() ;
-	//int col_blue = frame->GetControlPanel()->GetSliderColorBLUEValue() ;
-	wxClientDC dc(this);
-	dc.SetBrush(*wxBLACK);
-	dc.DrawRectangle(wxPoint(10,10), wxSize(20,20));
-	dc.SetBrush(wxColour(0,255,0,255));
-	dc.DrawRectangle(wxPoint(12,12), wxSize(16,16));
 }
 
 //------------------------------------------------------------------------
@@ -517,6 +558,8 @@ void MyDrawingPanel::OnPaint(wxPaintEvent &event)
 	int col_green = frame->GetControlPanel()->GetSliderColorGREENValue() ;
 	int col_blue = frame->GetControlPanel()->GetSliderColorBLUEValue() ;
 
+	int opa_border = frame->GetControlPanel()->GetSliderBorderOpacity() ;
+
 	// then paint
 	wxPaintDC dc(this);	
 
@@ -525,6 +568,7 @@ void MyDrawingPanel::OnPaint(wxPaintEvent &event)
 
 	///Affiche de la forme en cours de creation///
 	dc.SetBrush(wxColour(col_red,col_green,col_blue,transparency));
+	dc.SetPen(wxColour(col_red,col_green,col_blue,opa_border));
 		
 	//LINE AFFICHE quand il a pas le deuxième pt définit
 	if(monControleur->stepShape == 1 && (monControleur->btnSelected == ID_BUTTON_LINE || monControleur->btnSelected == ID_BUTTON_TRIANGLE)){dc.DrawLine(m_mousePoint, m_onePoint) ;}
@@ -849,8 +893,15 @@ void MonControleur::AddRectangle(){
 	int col_green = frame->GetControlPanel()->GetSliderColorGREENValue() ;
 	int col_blue = frame->GetControlPanel()->GetSliderColorBLUEValue() ;
 
+	int opa_border = frame->GetControlPanel()->GetSliderBorderOpacity() ;
+	int opa_width = frame->GetControlPanel()->GetSliderBorderWidth() ;
+
+	int bor_red = std::stoul(frame->GetControlPanel()->GetColPicked().Red(), nullptr, 16);
+	int bor_blue = std::stoul(frame->GetControlPanel()->GetColPicked().Blue(), nullptr, 16);
+	int bor_green = std::stoul(frame->GetControlPanel()->GetColPicked().Green(), nullptr, 16);
+
 	const Point* p1 = new Point(frame->GetPts(0, true), frame->GetPts(0, false));
-	dessin->addVector(new Rectangle (*p1, frame->GetPts(1, true)-frame->GetPts(0, true), frame->GetPts(1, false)-frame->GetPts(0, false), profondId, "Rectangle", col_red, col_blue, col_green, transparency, col_red, col_blue, col_green, transparency, 1));
+	dessin->addVector(new Rectangle (*p1, frame->GetPts(1, true)-frame->GetPts(0, true), frame->GetPts(1, false)-frame->GetPts(0, false), profondId, "Rectangle", col_red, col_blue, col_green, transparency, bor_red, bor_blue, bor_green, opa_border, opa_width));
 	profondId++;
 }
 
@@ -860,10 +911,17 @@ void MonControleur::AddLigne(){
 	int col_red = frame->GetControlPanel()->GetSliderColorREDValue() ;
 	int col_green = frame->GetControlPanel()->GetSliderColorGREENValue() ;
 	int col_blue = frame->GetControlPanel()->GetSliderColorBLUEValue() ;
+	
+	int opa_border = frame->GetControlPanel()->GetSliderBorderOpacity() ;
+	int opa_width = frame->GetControlPanel()->GetSliderBorderWidth() ;
+
+	int bor_red = std::stoul(frame->GetControlPanel()->GetColPicked().Red(), nullptr, 16);
+	int bor_blue = std::stoul(frame->GetControlPanel()->GetColPicked().Blue(), nullptr, 16);
+	int bor_green = std::stoul(frame->GetControlPanel()->GetColPicked().Green(), nullptr, 16);
 
 	const Point* p1 = new Point(frame->GetPts(0, true), frame->GetPts(0, false));
 	const Point* p2 = new Point(frame->GetPts(1, true), frame->GetPts(1, false));
-	dessin->addVector(new Ligne (*p1, *p2, profondId, "Ligne", col_red, col_blue, col_green, transparency, col_red, col_blue, col_green, transparency, 1));
+	dessin->addVector(new Ligne (*p1, *p2, profondId, "Ligne", col_red, col_blue, col_green, transparency, bor_red, bor_blue, bor_green, transparency, opa_width));
 	profondId++;
 }
 
@@ -873,10 +931,17 @@ void MonControleur::AddCercle(){
 	int col_red = frame->GetControlPanel()->GetSliderColorREDValue() ;
 	int col_green = frame->GetControlPanel()->GetSliderColorGREENValue() ;
 	int col_blue = frame->GetControlPanel()->GetSliderColorBLUEValue() ;
+	
+	int opa_border = frame->GetControlPanel()->GetSliderBorderOpacity() ;
+	int opa_width = frame->GetControlPanel()->GetSliderBorderWidth() ;
+
+	/*int bor_red = std::stoul(frame->GetControlPanel()->GetColPicked().Red(), nullptr, 16);
+	int bor_blue = std::stoul(frame->GetControlPanel()->GetColPicked().Blue(), nullptr, 16);
+	int bor_green = std::stoul(frame->GetControlPanel()->GetColPicked().Green(), nullptr, 16);*/
 
 	const Point* p1 = new Point(frame->GetPts(0, true), frame->GetPts(0, false));
 	const Point* p2 = new Point(frame->GetPts(1, true), frame->GetPts(1, false));
-	dessin->addVector(new Cercle (*p1, sqrt(pow(monControleur->GetFrame()->m_PointTmp2->x-monControleur->GetFrame()->m_PointTmp1->x, 2) + pow(monControleur->GetFrame()->m_PointTmp2->y-monControleur->GetFrame()->m_PointTmp1->y, 2)), profondId, "Cercle", col_red, col_blue, col_green, transparency, col_red, col_blue, col_green, transparency, 1));
+	dessin->addVector(new Cercle (*p1, sqrt(pow(monControleur->GetFrame()->m_PointTmp2->x-monControleur->GetFrame()->m_PointTmp1->x, 2) + pow(monControleur->GetFrame()->m_PointTmp2->y-monControleur->GetFrame()->m_PointTmp1->y, 2)), profondId, "Cercle", col_red, col_blue, col_green, transparency, bor_red, bor_blue, bor_green, opa_border, opa_width));
 	profondId++;
 }
 
@@ -887,11 +952,18 @@ void MonControleur::AddTriangle(){
 	int col_red = frame->GetControlPanel()->GetSliderColorREDValue() ;
 	int col_green = frame->GetControlPanel()->GetSliderColorGREENValue() ;
 	int col_blue = frame->GetControlPanel()->GetSliderColorBLUEValue() ;
+	
+	int opa_border = frame->GetControlPanel()->GetSliderBorderOpacity() ;
+	int opa_width = frame->GetControlPanel()->GetSliderBorderWidth() ;
+
+	int bor_red = std::stoul(frame->GetControlPanel()->GetColPicked().Red(), nullptr, 16);
+	int bor_blue = std::stoul(frame->GetControlPanel()->GetColPicked().Blue(), nullptr, 16);
+	int bor_green = std::stoul(frame->GetControlPanel()->GetColPicked().Green(), nullptr, 16);
 
 	const Point* p1 = new Point(frame->GetPts(0, true), frame->GetPts(0, false));
 	const Point* p2 = new Point(frame->GetPts(1, true), frame->GetPts(1, false));
 	const Point* p3 = new Point(frame->GetPts(2, true), frame->GetPts(2, false));
-	dessin->addVector(new Triangle(*p1, *p2, *p3, profondId, "Triangle", col_red, col_blue, col_green, transparency, col_red, col_blue, col_green, transparency, 1));
+	dessin->addVector(new Triangle(*p1, *p2, *p3, profondId, "Triangle", col_red, col_blue, col_green, transparency, bor_red, bor_blue, bor_green, opa_border, opa_width));
 	profondId++;
 }
 
