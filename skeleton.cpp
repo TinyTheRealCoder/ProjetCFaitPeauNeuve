@@ -54,14 +54,14 @@
 //------------------------------------------------------------------------
 // Some constants
 //------------------------------------------------------------------------
-#define APPLICATION_WIDTH	900
-#define APPLICATION_HEIGHT	800 
-#define WIDGET_PANEL_WIDTH	150
-#define WIDGET_Y0			30
-#define WIDGET_Y_LINE		70
-#define WIDGET_Y_RECT		110
-#define WIDGET_Y_CIRCLE		150
-#define WIDGET_Y_STEP		70
+#define APPLICATION_WIDTH		900
+#define APPLICATION_HEIGHT		800 
+#define WIDGET_PANEL_WIDTH		150
+#define WIDGET_Y0				30
+#define WIDGET_Y_STEP			70
+#define WIDGET_Y_SPACE_BTN		40
+#define WIDGET_Y_SPACE_SLINE	50
+#define WIDGET_Y_SPACE_TITLE	15
 #define APP_NAME "M1102 Skeleton 1.0"
 
 using namespace std;
@@ -79,6 +79,7 @@ enum
 	ID_BUTTON_LINE,
 	ID_BUTTON_RECT,
 	ID_BUTTON_CIRCLE,
+	ID_BUTTON_TRIANGLE,
 	ID_SLIDER_TRANSPARENCY,
 	ID_SLIDER_RED,
 	ID_SLIDER_BLUE,
@@ -106,6 +107,7 @@ class MonControleur{
 	void AddRectangle();
 	void AddLigne();
 	void AddCercle();
+	void AddTriangle();
 	MyFrame* GetFrame();
 	void AfficheFormeSaved(wxClientDC& dc);
 
@@ -245,53 +247,58 @@ MyControlPanel::MyControlPanel(wxWindow *parent) : wxPanel(parent)
 	wxStaticText* textOutils = new wxStaticText(this, wxID_ANY, wxT("Outils"), wxPoint(10, y)) ;
 	
 	//Ajout d'un bouton (Pinceau)
-	y = WIDGET_Y_LINE ; //Emplacement dans le panneau en fonction de la verticalité
+	y += WIDGET_Y_SPACE_BTN ; //Emplacement dans le panneau en fonction de la verticalité
 	m_button = new wxButton(this, ID_BUTTON_LINE, wxT("Ligne"), wxPoint(10, y)) ;
 	Bind(wxEVT_BUTTON, &MyControlPanel::OnButton, this, ID_BUTTON_LINE) ;
 	
 	//Ajout d'un bouton (Rectangle)
-	y = WIDGET_Y_RECT ; //Emplacement dans le panneau en fonction de la verticalité
+	y += WIDGET_Y_SPACE_BTN ; //Emplacement dans le panneau en fonction de la verticalité
 	m_button = new wxButton(this, ID_BUTTON_RECT, wxT("Rectangle"), wxPoint(10, y)) ;
 	Bind(wxEVT_BUTTON, &MyControlPanel::OnButton, this, ID_BUTTON_RECT) ;
 	
 	//Ajout d'un bouton (Cercle)
-	y = WIDGET_Y_CIRCLE ; //Emplacement dans le panneau en fonction de la verticalité
+	y += WIDGET_Y_SPACE_BTN ; //Emplacement dans le panneau en fonction de la verticalité
 	m_button = new wxButton(this, ID_BUTTON_CIRCLE, wxT("Circle"), wxPoint(10, y)) ;
 	Bind(wxEVT_BUTTON, &MyControlPanel::OnButton, this, ID_BUTTON_CIRCLE) ;
+	
+	//Ajout d'un bouton (Triangle)
+	y += WIDGET_Y_SPACE_BTN ; //Emplacement dans le panneau en fonction de la verticalité
+	m_button = new wxButton(this, ID_BUTTON_TRIANGLE, wxT("Triangle"), wxPoint(10, y)) ;
+	Bind(wxEVT_BUTTON, &MyControlPanel::OnButton, this, ID_BUTTON_TRIANGLE) ;
 
-	y+= 50 ;
+	y+= WIDGET_Y_SPACE_SLINE ;
 	wxStaticLine *sline1 = new wxStaticLine(this, wxID_ANY, wxPoint(20, y), wxSize(100,2));
 	
-	y+= 15 ;
-	wxStaticText* text1 = new wxStaticText(this, wxID_ANY, wxT("Transparency"), wxPoint(10, y)) ;
+	y+= WIDGET_Y_SPACE_TITLE ;
+	wxStaticText* text1 = new wxStaticText(this, wxID_ANY, wxT("Opacity"), wxPoint(10, y)) ;
 	
-	y+= 30 ;
+	y+= WIDGET_Y_SPACE_BTN ;
 	m_slider = new wxSlider(this, ID_SLIDER_TRANSPARENCY, 10, 2, 255, wxPoint(10, y), wxSize(100,20), wxSL_LABELS) ;
 	Bind(wxEVT_SCROLL_THUMBTRACK, &MyControlPanel::OnSlider, this, ID_SLIDER_TRANSPARENCY) ;	
 
-	y+= 50 ;
+	y+= WIDGET_Y_SPACE_SLINE ;
 	wxStaticLine *sline2 = new wxStaticLine(this, wxID_ANY, wxPoint(20, y), wxSize(100,2));
 	
-	y+= 15 ;
+	y+= WIDGET_Y_SPACE_TITLE ;
 	wxStaticText* textColor = new wxStaticText(this, wxID_ANY, wxT("Color"), wxPoint(10, y)) ;
 	//wxClientDC dc(this);	
 	//dc.SetBrush(wxColour(77,0,77,255));
     //wxRect* rect_color = new wxRect(wxPoint(70,y), wxPoint(80, y+10));
 
-	y+= 30 ;
+	y+= WIDGET_Y_SPACE_BTN ;
 	m_slider_red = new wxSlider(this, ID_SLIDER_RED, 10, 2, 255, wxPoint(10, y), wxSize(100,20), wxSL_LABELS) ;
 	Bind(wxEVT_SCROLL_THUMBTRACK, &MyControlPanel::OnSlider, this, ID_SLIDER_RED) ;	
 
-	y+= 40 ;
+	y+= WIDGET_Y_SPACE_BTN ;
 	m_slider_green = new wxSlider(this, ID_SLIDER_GREEN, 10, 2, 255, wxPoint(10, y), wxSize(100,20), wxSL_LABELS) ;
 	Bind(wxEVT_SCROLL_THUMBTRACK, &MyControlPanel::OnSlider, this, ID_SLIDER_GREEN) ;	
 
-	y+= 40 ;
+	y+= WIDGET_Y_SPACE_BTN ;
 	m_slider_blue = new wxSlider(this, ID_SLIDER_BLUE, 10, 2, 255, wxPoint(10, y), wxSize(100,20), wxSL_LABELS) ;
 	Bind(wxEVT_SCROLL_THUMBTRACK, &MyControlPanel::OnSlider, this, ID_SLIDER_BLUE) ;
 	//https://www.wxishiko.com/wxWidgetsTutorials/wxcolourpickerctrl.html
 	
-	y+= 50 ;
+	y+= WIDGET_Y_SPACE_BTN ;
 	wxStaticLine *sline3 = new wxStaticLine(this, wxID_ANY, wxPoint(20, y), wxSize(100,2));
 	
 	y+= WIDGET_Y_STEP ;
@@ -333,6 +340,10 @@ void MyControlPanel::OnButton(wxCommandEvent &event)
 		case ID_BUTTON_CIRCLE :
 			//A chaque nouveau rectangle on definit son action
 			wxMessageBox(wxT("Cercle activé")) ;
+			break;
+		case ID_BUTTON_TRIANGLE :
+			//A chaque nouveau rectangle on definit son action
+			wxMessageBox(wxT("Triangle activé")) ;
 			break;
 		default:
 			wxMessageBox(wxT("Bouton inutilisé")) ;
@@ -465,6 +476,24 @@ void MyDrawingPanel::OnMouseLeftDown(wxMouseEvent &event)
 				monControleur->AddCercle();
 			}
 			break;
+		case ID_BUTTON_TRIANGLE :
+			//A chaque nouveau cercle on definit son action
+			if(monControleur->stepShape == 0){
+				monControleur->ResetPts();
+				monControleur->SetPts(monControleur->stepShape, m_onePoint.x, m_onePoint.y);
+				monControleur->stepShape++;
+			}
+			else if(monControleur->stepShape == 1){
+				monControleur->SetPts(monControleur->stepShape, m_onePoint.x, m_onePoint.y);
+				monControleur->stepShape++;
+			}
+			else{
+				monControleur->SetPts(monControleur->stepShape, m_onePoint.x, m_onePoint.y);
+				//CREATION
+				monControleur->stepShape = 0;
+				monControleur->AddTriangle();
+			}
+			break;
 		default:
 			break;
 	}
@@ -498,19 +527,19 @@ void MyDrawingPanel::OnPaint(wxPaintEvent &event)
 	dc.SetBrush(wxColour(col_red,col_green,col_blue,transparency));
 		
 	//LINE AFFICHE quand il a pas le deuxième pt définit
-	if(monControleur->stepShape == 1 && monControleur->btnSelected == ID_BUTTON_LINE){dc.DrawLine(m_mousePoint, m_onePoint) ;}
-	//LINE AFFICHE
-	//if(monControleur->GetFrame()->m_PointTmp1 != nullptr && monControleur->GetFrame()->m_PointTmp2 != nullptr && monControleur->btnSelected == ID_BUTTON_LINE){dc.DrawLine(*monControleur->GetFrame()->m_PointTmp1, *monControleur->GetFrame()->m_PointTmp2) ;}
+	if(monControleur->stepShape == 1 && (monControleur->btnSelected == ID_BUTTON_LINE || monControleur->btnSelected == ID_BUTTON_TRIANGLE)){dc.DrawLine(m_mousePoint, m_onePoint) ;}
 
+	//TRIANGLE Affiche est quasiment similaire et est complete ligne
+	if(monControleur->stepShape == 2 && monControleur->btnSelected == ID_BUTTON_TRIANGLE){
+		dc.DrawLine(wxPoint(monControleur->GetFrame()->m_PointTmp1->x, monControleur->GetFrame()->m_PointTmp1->y), wxPoint(monControleur->GetFrame()->m_PointTmp2->x, monControleur->GetFrame()->m_PointTmp2->y));
+		dc.DrawLine(m_mousePoint, m_onePoint) ;
+	}
+	
 	//RECT AFFICHE quand il a pas le deuxième pt définit
 	if(monControleur->stepShape == 1 && monControleur->btnSelected == ID_BUTTON_RECT){dc.DrawRectangle(wxPoint(monControleur->GetFrame()->m_PointTmp1->x, monControleur->GetFrame()->m_PointTmp1->y), wxSize(m_mousePoint.x-monControleur->GetFrame()->m_PointTmp1->x,m_mousePoint.y-monControleur->GetFrame()->m_PointTmp1->y)) ;}
-	//RECT AFFICHE
-	//if(monControleur->GetFrame()->m_PointTmp1 != nullptr && monControleur->GetFrame()->m_PointTmp2 != nullptr && monControleur->btnSelected == ID_BUTTON_RECT){dc.DrawRectangle(wxPoint(monControleur->GetFrame()->m_PointTmp1->x, monControleur->GetFrame()->m_PointTmp1->y), wxSize(monControleur->GetFrame()->m_PointTmp2->x-monControleur->GetFrame()->m_PointTmp1->x,monControleur->GetFrame()->m_PointTmp2->y-monControleur->GetFrame()->m_PointTmp1->y)) ;}
 	
 	//CIRCLE AFFICHE quand il a pas le deuxième pt définit
 	if(monControleur->stepShape == 1 && monControleur->btnSelected == ID_BUTTON_CIRCLE){dc.DrawCircle(wxPoint(*monControleur->GetFrame()->m_PointTmp1), sqrt(pow(m_mousePoint.x-monControleur->GetFrame()->m_PointTmp1->x, 2) + pow(m_mousePoint.y-monControleur->GetFrame()->m_PointTmp1->y, 2))) ;}
-	//CIRCLE AFFICHE
-	//if(monControleur->GetFrame()->m_PointTmp1 != nullptr && monControleur->GetFrame()->m_PointTmp2 != nullptr && monControleur->btnSelected == ID_BUTTON_CIRCLE){dc.DrawCircle(wxPoint(*monControleur->GetFrame()->m_PointTmp1), sqrt(pow(monControleur->GetFrame()->m_PointTmp2->x-monControleur->GetFrame()->m_PointTmp1->x, 2) + pow(monControleur->GetFrame()->m_PointTmp2->y-monControleur->GetFrame()->m_PointTmp1->y, 2))) ;}
 	
 	///Affichage du curseur///
 	dc.SetBrush(*wxWHITE);
@@ -830,14 +859,22 @@ void MonControleur::AddCercle(){
 	profondId++;
 }
 
+void MonControleur::AddTriangle(){
+	const Point* p1 = new Point(frame->GetPts(0, true), frame->GetPts(0, false));
+	const Point* p2 = new Point(frame->GetPts(1, true), frame->GetPts(1, false));
+	const Point* p3 = new Point(frame->GetPts(2, true), frame->GetPts(2, false));
+	dessin->addVector(new Triangle(*p1, *p2, *p3, profondId, "Triangle"));
+	profondId++;
+}
+
 MyFrame* MonControleur::GetFrame(){
 	return frame;
 } 
 
 void MonControleur::AfficheFormeSaved(wxClientDC& dc){
-	/*for(Forme forme : dessin->getVector()){
+	for(Forme* forme : dessin->getVector()){
 		forme->draw(dc);
-	}*/
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////////
