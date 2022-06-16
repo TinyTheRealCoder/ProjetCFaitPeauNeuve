@@ -410,10 +410,21 @@ void MyControlPanel::OnSlider(wxScrollEvent &event)
 	int col_green = frame->GetControlPanel()->GetSliderColorGREENValue() ;
 	int col_blue = frame->GetControlPanel()->GetSliderColorBLUEValue() ;
 	wxClientDC dc(this);
-	dc.SetBrush(*wxBLACK);
-	dc.DrawRectangle(wxPoint(10,10), wxSize(20,20));
+	dc.SetBrush(*wxWHITE);
+	dc.DrawRectangle(wxPoint(100,360), wxSize(20,20));
+
+	dc.SetBrush(*wxLIGHT_GREY);
+	dc.DrawRectangle(wxPoint(100,360), wxSize(5,5));
+	dc.DrawRectangle(wxPoint(100,370), wxSize(5,5));
+	dc.DrawRectangle(wxPoint(105,365), wxSize(5,5));
+	dc.DrawRectangle(wxPoint(105,375), wxSize(5,5));
+	dc.DrawRectangle(wxPoint(110,370), wxSize(5,5));
+	dc.DrawRectangle(wxPoint(110,380), wxSize(5,5));
+	dc.DrawRectangle(wxPoint(115,375), wxSize(5,5));
+	dc.DrawRectangle(wxPoint(115,385), wxSize(5,5));
+
 	dc.SetBrush(wxColour(col_red,col_green,col_blue,255));
-	dc.DrawRectangle(wxPoint(12,12), wxSize(16,16));
+	dc.DrawRectangle(wxPoint(100,360), wxSize(20,20));
 	frame->RefreshDrawing() ;	// update the drawing panel
 }
 
@@ -428,7 +439,7 @@ void MyControlPanel::OnCheckBox(wxCommandEvent &event)
 	int col_blue = frame->GetControlPanel()->GetSliderColorBLUEValue() ;
 	wxClientDC dc(this);
 	dc.SetBrush(*wxBLACK);
-	dc.DrawRectangle(wxPoint(10,10), wxSize(20,20));
+	dc.DrawRectangle(wxPoint(100,300), wxSize(20,20));
 	dc.SetBrush(wxColour(col_red,col_green,col_blue,255));
 	dc.DrawRectangle(wxPoint(12,12), wxSize(16,16));
 	frame->RefreshDrawing() ;	// update the drawing panel
@@ -559,6 +570,11 @@ void MyDrawingPanel::OnPaint(wxPaintEvent &event)
 	int col_blue = frame->GetControlPanel()->GetSliderColorBLUEValue() ;
 
 	int opa_border = frame->GetControlPanel()->GetSliderBorderOpacity() ;
+	int opa_width = frame->GetControlPanel()->GetSliderBorderWidth() ;
+
+	unsigned char bor_red = frame->GetControlPanel()->GetColPicked().Red();
+	unsigned char bor_blue = frame->GetControlPanel()->GetColPicked().Blue();
+	unsigned char bor_green = frame->GetControlPanel()->GetColPicked().Green();
 
 	// then paint
 	wxPaintDC dc(this);	
@@ -568,7 +584,10 @@ void MyDrawingPanel::OnPaint(wxPaintEvent &event)
 
 	///Affiche de la forme en cours de creation///
 	dc.SetBrush(wxColour(col_red,col_green,col_blue,transparency));
-	dc.SetPen(wxColour(col_red,col_green,col_blue,opa_border));
+
+	wxPen* xPen = new wxPen(wxColour(bor_red,bor_green,bor_blue,opa_border));
+	xPen->SetWidth(opa_width);
+	dc.SetPen(*xPen);
 		
 	//LINE AFFICHE quand il a pas le deuxième pt définit
 	if(monControleur->stepShape == 1 && (monControleur->btnSelected == ID_BUTTON_LINE || monControleur->btnSelected == ID_BUTTON_TRIANGLE)){dc.DrawLine(m_mousePoint, m_onePoint) ;}
@@ -587,7 +606,7 @@ void MyDrawingPanel::OnPaint(wxPaintEvent &event)
 	
 	///Affichage du curseur///
 	dc.SetBrush(*wxWHITE);
-	//dc.SetPen(*wxRED);
+	dc.SetPen(*wxBLACK);
 	dc.DrawCircle(wxPoint(m_mousePoint),5);
 
 	if (check)
