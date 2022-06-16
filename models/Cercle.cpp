@@ -25,7 +25,9 @@ Cercle::Cercle(Point centre, int radius, int IndProfond, string label, int red_f
 void Cercle::draw(wxClientDC& drawC) 
 {	
     drawC.SetBrush(wxColour(m_red_fill, m_green_fill, m_blue_fill, m_opacity_fill));
-    drawC.SetPen(wxColour(m_red_stroke, m_green_stroke, m_blue_stroke, m_opacity_stroke));
+    wxPen* xPen = new wxPen(wxColour(m_red_stroke,m_green_stroke,m_blue_stroke,m_opacity_stroke));
+	xPen->SetWidth(m_stroke_width);
+	drawC.SetPen(*xPen);
     drawC.DrawCircle(wxPoint(m_center.GetX(),m_center.GetY()),(m_radius));
 }
 /* Alternative

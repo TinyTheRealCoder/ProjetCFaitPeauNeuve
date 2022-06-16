@@ -65,7 +65,9 @@ Triangle &Triangle::operator=(const Triangle &other)
 void Triangle::draw(wxClientDC& drawC) 
 {	
     drawC.SetBrush(wxColour(m_red_fill, m_green_fill, m_blue_fill, m_opacity_fill));
-    drawC.SetPen(wxColour(m_red_stroke, m_green_stroke, m_blue_stroke, m_opacity_stroke));
+    wxPen* xPen = new wxPen(wxColour(m_red_stroke,m_green_stroke,m_blue_stroke,m_opacity_stroke));
+	xPen->SetWidth(m_stroke_width);
+	drawC.SetPen(*xPen);
     wxPoint points[3];
 
     points[0] = wxPoint(m_p1.GetX(),m_p1.GetY());
