@@ -37,7 +37,7 @@ public:
     
     void SetIndProfond(int IndProfondeur);
     int GetIndProfond() const; 
-    virtual void draw(wxClientDC drawC){};
+    virtual void draw(wxClientDC& drawC){};
 
     //MODIFY
     //---

@@ -33,7 +33,7 @@ public:
     int GetY1();
     int GetY2();
     
-    void draw(wxClientDC drawC) override;
+    void draw(wxClientDC& drawC) override;
 
     //MODIFY
     virtual std::string Display();
