@@ -47,6 +47,8 @@ Rectangle::Rectangle(const Point& p, int w, int h, int IndProfond, const std::st
 
 void Rectangle::draw(wxClientDC& drawC) 
 {	
+    drawC.SetBrush(wxColour(m_red_fill, m_green_fill, m_blue_fill, m_opacity_fill));
+    drawC.SetPen(wxColour(m_red_stroke, m_green_stroke, m_blue_stroke, m_opacity_stroke));
     drawC.DrawRectangle(wxPoint(m_corner.GetX(),m_corner.GetY()),wxSize(m_w,m_h));
 }
 

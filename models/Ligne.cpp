@@ -93,6 +93,8 @@ int Ligne::GetY2()
 
 void Ligne::draw(wxClientDC& drawC) 
 {	
+    drawC.SetBrush(wxColour(m_red_fill, m_green_fill, m_blue_fill, m_opacity_fill));
+    drawC.SetPen(wxColour(m_red_stroke, m_green_stroke, m_blue_stroke, m_opacity_stroke));
     drawC.DrawLine(wxPoint(p1.GetX(),p1.GetY()),wxPoint(p2.GetX(),p2.GetY()));
 }
 
