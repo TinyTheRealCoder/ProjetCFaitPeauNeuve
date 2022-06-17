@@ -111,3 +111,12 @@ std::string Ligne::Display()
     
 }
 
+bool Ligne::IsInside(int mouse_x, int mouse_y) {
+
+    float r1 = sqrt(pow(p1.GetX()-mouse_x, 2) + pow(p1.GetY()-mouse_y, 2));
+    float r2 = sqrt(pow(p2.GetX()-mouse_x, 2) + pow(p2.GetY()-mouse_y, 2));
+    float r3 = sqrt(pow(p2.GetX()-p1.GetX(), 2) + pow(p2.GetY()-p1.GetY(), 2));
+    return ((r1+r2) <= (r3 + 0.3f + (m_stroke_width/4.0f)) );
+
+}
+

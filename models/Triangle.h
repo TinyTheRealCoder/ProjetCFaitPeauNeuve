@@ -27,6 +27,7 @@ public:
     virtual std::string Display() override;
 	
     void draw(wxClientDC& drawC) override;
+    virtual bool IsInside(int mouse_x, int mouse_y) override;    // v�rifie l'inclusion
 	
 // Pourrait aussi �tre "protected:"
 private:

@@ -34,6 +34,7 @@ public:
     int GetY2();
     
     void draw(wxClientDC& drawC) override;
+    virtual bool IsInside(int mouse_x, int mouse_y) override;    // v�rifie l'inclusion
 
     //MODIFY
     virtual std::string Display();

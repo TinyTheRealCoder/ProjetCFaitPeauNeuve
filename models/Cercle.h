@@ -23,6 +23,7 @@ public:
     
     //Mise en balise SVG
     virtual std::string Display() override;
+    virtual bool IsInside(int mouse_x, int mouse_y) override;    // v�rifie l'inclusion
     
 
 private:    

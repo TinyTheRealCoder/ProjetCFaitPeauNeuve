@@ -77,20 +77,22 @@ void Triangle::draw(wxClientDC& drawC)
     drawC.DrawPolygon(WXSIZEOF(points),points);
 }
 
-/*
-void Triangle::Display() const
-{
-    std::cout << "Triangle " << GetLabel() << "="
-              << "(" << m_p1.GetX() << "," << m_p1.GetY() << ")"
-              << "(" << m_p2.GetX() << "," << m_p2.GetY() << ")"
-              << "(" << m_p3.GetX() << "," << m_p3.GetY() << ")" << std::endl;
-}
-*/
-
 //MODIFY
 //-------------------------------------------
 std::string Triangle::Display()
 //-------------------------------------------
 {
     return "<polygon points=\"" + std::to_string(m_p1.GetX()) + " " + std::to_string(m_p1.GetY()) + "," + std::to_string(m_p2.GetX()) + " " + std::to_string(m_p2.GetY()) + "," + std::to_string(m_p3.GetX()) + " " + std::to_string(m_p3.GetY()) + "\" stroke=\"rgba(" +std::to_string(m_red_stroke)+ "," +std::to_string(m_green_stroke)+ "," +std::to_string(m_blue_stroke)+ "," +std::to_string(m_opacity_stroke) + ")\" stroke-line=\"" + std::to_string(m_stroke_width)  +"\" fill=\"rgba(" +std::to_string(m_red_fill)+ "," +std::to_string(m_green_fill)+ "," +std::to_string(m_blue_fill)+ "," +std::to_string(m_opacity_fill) + ")\" >";
+}
+
+bool Triangle::IsInside(int mouse_x, int mouse_y) {
+    int dX = mouse_x-m_p3.GetX();
+    int dY = mouse_y-m_p3.GetY();
+    int dX21 = m_p3.GetX()-m_p2.GetX();
+    int dY12 = m_p2.GetY()-m_p3.GetY();
+    int D = dY12*(m_p1.GetX()-m_p3.GetX()) + dX21*(m_p1.GetY()-m_p3.GetY());
+    int s = dY12*dX + dX21*dY;
+    int t = (m_p3.GetY()-m_p1.GetY())*dX + (m_p1.GetX()-m_p3.GetX())*dY;
+    if (D<0) return s<=0 && t<=0 && s+t>=D;
+    return s>=0 && t>=0 && s+t<=D;
 }

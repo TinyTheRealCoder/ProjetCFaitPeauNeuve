@@ -1012,7 +1012,6 @@ void MonControleur::DeleteShape(int x, int y){
 			dessin->removeVector(i);
 			break;
 		}
-		i++;
     }
 }
 
