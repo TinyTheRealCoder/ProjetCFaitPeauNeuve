@@ -91,7 +91,9 @@ int Ligne::GetY2()
     return p2.GetY();
 }
 
+//-------------------------------------------
 void Ligne::draw(wxClientDC& drawC) 
+//-------------------------------------------
 {	
     drawC.SetBrush(wxColour(m_red_fill, m_green_fill, m_blue_fill, m_opacity_fill));
     wxPen* xPen = new wxPen(wxColour(m_red_stroke,m_green_stroke,m_blue_stroke,m_opacity_stroke));
@@ -100,18 +102,19 @@ void Ligne::draw(wxClientDC& drawC)
     drawC.DrawLine(wxPoint(p1.GetX(),p1.GetY()),wxPoint(p2.GetX(),p2.GetY()));
 }
 
-//MODIFY
 //-------------------------------------------
 std::string Ligne::Display()
 //-------------------------------------------
 {
-    // On affiche le nom
-    
-    return "<line x1=\"" + std::to_string(p1.GetX()) + "\" y1=\"" + std::to_string(p1.GetY()) + "\" x2=\"" + std::to_string(p2.GetX()) + "\" x2=\"" + std::to_string(p2.GetY()) + "\" stroke=\"rgba(" +std::to_string(m_red_stroke)+ "," +std::to_string(m_green_stroke)+ "," +std::to_string(m_blue_stroke)+ "," +std::to_string(m_opacity_stroke) + ")\" stroke-line=\"" + std::to_string(m_stroke_width)  +"\" fill=\"rgba(" +std::to_string(m_red_fill)+ "," +std::to_string(m_green_fill)+ "," +std::to_string(m_blue_fill)+ "," +std::to_string(m_opacity_fill) + ")\" >";
+
+    return "<line x1=\"" + std::to_string(p1.GetX()) + "\" y1=\"" + std::to_string(p1.GetY()) + "\" x2=\"" + std::to_string(p2.GetX()) + "\" y2=\"" + std::to_string(p2.GetY()) + "\" stroke=\"rgb(" +std::to_string(m_red_stroke)+ "," +std::to_string(m_green_stroke)+ "," +std::to_string(m_blue_stroke)+ ")\" stroke-opacity=\"" +std::to_string(m_opacity_stroke/255) + "\" stroke-width=\"" + std::to_string(m_stroke_width)  +"\" fill=\"rgb(" +std::to_string(m_red_fill)+ "," +std::to_string(m_green_fill)+ "," +std::to_string(m_blue_fill)+ ")\" fill-opacity=\"" +std::to_string(m_opacity_fill/255) + "\" />";
     
 }
 
-bool Ligne::IsInside(int mouse_x, int mouse_y) {
+//-------------------------------------------
+bool Ligne::IsInside(int mouse_x, int mouse_y) 
+//-------------------------------------------
+{
 
     float r1 = sqrt(pow(p1.GetX()-mouse_x, 2) + pow(p1.GetY()-mouse_y, 2));
     float r2 = sqrt(pow(p2.GetX()-mouse_x, 2) + pow(p2.GetY()-mouse_y, 2));

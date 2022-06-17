@@ -7,22 +7,27 @@
 class Dessin
 {
 
-public:
+    public:
 
-    Dessin();
-    Dessin(const Dessin& dessin);
-    Dessin& operator=(const Dessin& dessin);
-    ~Dessin();
+        //Contructeur, Destructeur, Opérateurs
+        Dessin();
+        Dessin(const Dessin& dessin);
+        Dessin& operator=(const Dessin& dessin);
+        ~Dessin();
 
-    std::vector<Forme*> getVector();
-    void addVector(Forme* forme);
-    void removeVector(int i);
-    void SendBackVector(int i);
-    void SendFrontVector(int i);
+        //Getteur
+        std::vector<Forme*> getVector();
 
-private:
+        //Modification sur le vecteur de formes
+        void addVector(Forme* forme);
+        void removeVector(int i);
+        void SendBackVector(int i);
+        void SendFrontVector(int i);
 
-    std::vector<Forme*> dessins;
+    private:
+
+        std::vector<Forme*> dessins;
+        
 
 };
 

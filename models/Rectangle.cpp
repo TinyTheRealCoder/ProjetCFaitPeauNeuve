@@ -45,15 +45,6 @@ Rectangle::Rectangle(const Point& p, int w, int h, int IndProfond, const std::st
     m_rectCount++;
 }
 
-void Rectangle::draw(wxClientDC& drawC) 
-{	
-    drawC.SetBrush(wxColour(m_red_fill, m_green_fill, m_blue_fill, m_opacity_fill));
-    wxPen* xPen = new wxPen(wxColour(m_red_stroke,m_green_stroke,m_blue_stroke,m_opacity_stroke));
-	xPen->SetWidth(m_stroke_width);
-	drawC.SetPen(*xPen);
-    drawC.DrawRectangle(wxPoint(m_corner.GetX(),m_corner.GetY()),wxSize(m_w,m_h));
-}
-
 
 //-------------------------------------------
 Rectangle::~Rectangle()
@@ -108,12 +99,21 @@ int Rectangle::GetHeight() const
     return m_h;
 }
 
-//MODIFY
 //-------------------------------------------
 std::string Rectangle::Display()
 //-------------------------------------------
 {
-    return "<rect x=\"" + std::to_string(m_corner.GetX()) + "\" y=\"" + std::to_string(m_corner.GetY()) + "\" width=\"" + std::to_string(m_w) + "\" height=\"" + std::to_string(m_h) + + "\" stroke=\"rgba(" +std::to_string(m_red_stroke)+ "," +std::to_string(m_green_stroke)+ "," +std::to_string(m_blue_stroke)+ "," +std::to_string(m_opacity_stroke) + ")\" stroke-line=\"" + std::to_string(m_stroke_width)  +"\" fill=\"rgba(" +std::to_string(m_red_fill)+ "," +std::to_string(m_green_fill)+ "," +std::to_string(m_blue_fill)+ "," +std::to_string(m_opacity_fill) + ")\" >";
+    if(m_w < 0){
+        m_corner.SetX(m_corner.GetX()+m_w);
+        m_w = -m_w;
+    }
+    
+    if(m_h < 0){
+        m_corner.SetY(m_corner.GetY()+m_h);
+        m_h = -m_h;
+    }
+
+    return "<rect x=\"" + std::to_string(m_corner.GetX()) + "\" y=\"" + std::to_string(m_corner.GetY()) + "\" width=\"" + std::to_string(m_w) + "\" height=\"" + std::to_string(m_h) + + "\" stroke=\"rgb(" +std::to_string(m_red_stroke)+ "," +std::to_string(m_green_stroke)+ "," +std::to_string(m_blue_stroke)+ ")\" stroke-opacity=\"" +std::to_string(m_opacity_stroke) + "\" stroke-width=\"" + std::to_string(m_stroke_width)  +"\" fill=\"rgb(" +std::to_string(m_red_fill)+ "," +std::to_string(m_green_fill)+ "," +std::to_string(m_blue_fill)+ ")\" fill-opacity=\"" +std::to_string(m_opacity_fill/255) + "\" />";
 }
 
 //-------------------------------------------
@@ -153,4 +153,15 @@ bool Rectangle::IsInside(int mouse_x, int mouse_y)
     }
 
     return (mouse_x >= x_start && mouse_x <= x_end && mouse_y >= y_start && mouse_y <= y_end);
+}
+
+//-------------------------------------------
+void Rectangle::draw(wxClientDC& drawC) 
+//-------------------------------------------
+{	
+    drawC.SetBrush(wxColour(m_red_fill, m_green_fill, m_blue_fill, m_opacity_fill));
+    wxPen* xPen = new wxPen(wxColour(m_red_stroke,m_green_stroke,m_blue_stroke,m_opacity_stroke));
+	xPen->SetWidth(m_stroke_width);
+	drawC.SetPen(*xPen);
+    drawC.DrawRectangle(wxPoint(m_corner.GetX(),m_corner.GetY()),wxSize(m_w,m_h));
 }

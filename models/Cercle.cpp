@@ -22,26 +22,6 @@ Cercle::Cercle(Point centre, int radius, int IndProfond, string label, int red_f
     m_circleCount++;
 }
 
-void Cercle::draw(wxClientDC& drawC) 
-{	
-    drawC.SetBrush(wxColour(m_red_fill, m_green_fill, m_blue_fill, m_opacity_fill));
-    wxPen* xPen = new wxPen(wxColour(m_red_stroke,m_green_stroke,m_blue_stroke,m_opacity_stroke));
-	xPen->SetWidth(m_stroke_width);
-	drawC.SetPen(*xPen);
-    drawC.DrawCircle(wxPoint(m_center.GetX(),m_center.GetY()),(m_radius));
-}
-/* Alternative
-Cercle::Cercle(Point centre, int radius, int IndProfond, string label)
-{
-    m_center = centre;
-    m_radius = radius;
-    m_label = label;
-    cout << "Cercle (riche)" << endl;
-    SetLabel(label);
-    m_circleCount++;
-}
-*/
-
 // constructeur par d�faut, le constructeur par d�faut de
 // Forme est automatiquement appel�
 Cercle::Cercle()
@@ -75,15 +55,28 @@ Cercle &Cercle::operator=(const Cercle &other)
     return *this;
 }
 
-//MODIFY
 //-------------------------------------------
 std::string Cercle::Display()
 //-------------------------------------------
 {
-    return "<circle cx=\"" + std::to_string(m_center.GetX()) + "\" cy=\"" + std::to_string(m_center.GetY()) + "\" r=\"" + std::to_string(m_radius) + "\" stroke=\"rgba(" +std::to_string(m_red_stroke)+ "," +std::to_string(m_green_stroke)+ "," +std::to_string(m_blue_stroke)+ "," +std::to_string(m_opacity_stroke) + ")\" stroke-line=\"" + std::to_string(m_stroke_width)  +"\" fill=\"rgba(" +std::to_string(m_red_fill)+ "," +std::to_string(m_green_fill)+ "," +std::to_string(m_blue_fill)+ "," +std::to_string(m_opacity_fill) + ")\" >";
+    return "<circle cx=\"" + std::to_string(m_center.GetX()) + "\" cy=\"" + std::to_string(m_center.GetY()) + "\" r=\"" + std::to_string(m_radius) + "\" stroke=\"rgb(" +std::to_string(m_red_stroke)+ "," +std::to_string(m_green_stroke)+ "," +std::to_string(m_blue_stroke)+ ")\" stroke-opacity=\"" +std::to_string(m_opacity_stroke/255) + "\" stroke-width=\"" + std::to_string(m_stroke_width)  +"\" fill=\"rgb(" +std::to_string(m_red_fill)+ "," +std::to_string(m_green_fill)+ "," +std::to_string(m_blue_fill)+ ")\" fill-opacity=\"" +std::to_string(m_opacity_fill/255) + "\" />";
 }
 
-bool Cercle::IsInside(int mouse_x, int mouse_y) {
+//-------------------------------------------
+bool Cercle::IsInside(int mouse_x, int mouse_y)
+//------------------------------------------- 
+{
     int r1 = sqrt(pow(m_center.GetX()-mouse_x, 2) + pow(m_center.GetY()-mouse_y, 2));
     return (r1 <= m_radius);
+}
+
+//-------------------------------------------
+void Cercle::draw(wxClientDC& drawC) 
+//-------------------------------------------
+{	
+    drawC.SetBrush(wxColour(m_red_fill, m_green_fill, m_blue_fill, m_opacity_fill));
+    wxPen* xPen = new wxPen(wxColour(m_red_stroke,m_green_stroke,m_blue_stroke,m_opacity_stroke));
+	xPen->SetWidth(m_stroke_width);
+	drawC.SetPen(*xPen);
+    drawC.DrawCircle(wxPoint(m_center.GetX(),m_center.GetY()),(m_radius));
 }
