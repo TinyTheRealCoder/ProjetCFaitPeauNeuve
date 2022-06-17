@@ -61,14 +61,15 @@
 //------------------------------------------------------------------------
 // Some constants
 //------------------------------------------------------------------------
-#define APPLICATION_WIDTH		1200
-#define APPLICATION_HEIGHT		1000 
-#define WIDGET_PANEL_WIDTH		150
-#define WIDGET_Y0				30
-#define WIDGET_Y_STEP			70
-#define WIDGET_Y_SPACE_BTN		40
-#define WIDGET_Y_SPACE_SLINE	50
-#define WIDGET_Y_SPACE_TITLE	15
+#define APPLICATION_WIDTH			1200
+#define APPLICATION_HEIGHT			1055 
+#define WIDGET_PANEL_WIDTH			150
+#define WIDGET_Y0					5
+#define WIDGET_Y_STEP				70
+#define WIDGET_Y_SPACE_BTN			40
+#define WIDGET_Y_SPACE_BTN_PLUS		50
+#define WIDGET_Y_SPACE_SLINE		50
+#define WIDGET_Y_SPACE_TITLE		15
 #define APP_NAME "M1102 Skeleton 1.0"
 
 using namespace std;
@@ -88,6 +89,8 @@ enum
 	ID_BUTTON_RECT,
 	ID_BUTTON_CIRCLE,
 	ID_BUTTON_TRIANGLE,
+	ID_BUTTON_SD_BACK,
+	ID_BUTTON_SD_FRONT,
 	ID_SLIDER_TRANSPARENCY,
 	ID_SLIDER_RED,
 	ID_SLIDER_BLUE,
@@ -119,6 +122,8 @@ class MonControleur{
 	void AddCercle();
 	void AddTriangle();
 	void DeleteShape(int x, int y);
+	void SendBack(int x, int y);
+	void SendFront(int x, int y);
 	MyFrame* GetFrame();
 	void AfficheFormeSaved(wxClientDC& dc);
 
@@ -268,11 +273,6 @@ MyControlPanel::MyControlPanel(wxWindow *parent) : wxPanel(parent)
 	//Texte entete outils
 	y = WIDGET_Y0 ;
 	wxStaticText* textOutils = new wxStaticText(this, wxID_ANY, wxT("Outils"), wxPoint(10, y)) ;
-	
-	//Ajout d'un bouton (Gomme)
-	y += WIDGET_Y_SPACE_BTN ; //Emplacement dans le panneau en fonction de la verticalité
-	m_button = new wxButton(this, ID_BUTTON_DELETE, wxT("Gomme"), wxPoint(10, y)) ;
-	Bind(wxEVT_BUTTON, &MyControlPanel::OnButton, this, ID_BUTTON_DELETE) ;
 
 	//Ajout d'un bouton (Pinceau)
 	y += WIDGET_Y_SPACE_BTN ; //Emplacement dans le panneau en fonction de la verticalité
@@ -293,6 +293,22 @@ MyControlPanel::MyControlPanel(wxWindow *parent) : wxPanel(parent)
 	y += WIDGET_Y_SPACE_BTN ; //Emplacement dans le panneau en fonction de la verticalité
 	m_button = new wxButton(this, ID_BUTTON_TRIANGLE, wxT("Triangle"), wxPoint(10, y)) ;
 	Bind(wxEVT_BUTTON, &MyControlPanel::OnButton, this, ID_BUTTON_TRIANGLE) ;
+
+	//Ajout d'un bouton (Send Back)
+	y += WIDGET_Y_SPACE_BTN_PLUS ; //Emplacement dans le panneau en fonction de la verticalité
+	m_button = new wxButton(this, ID_BUTTON_SD_FRONT, wxT("Avancer forme"), wxPoint(10, y)) ;
+	Bind(wxEVT_BUTTON, &MyControlPanel::OnButton, this, ID_BUTTON_SD_FRONT) ;
+
+	//Ajout d'un bouton (Send Back)
+	y += WIDGET_Y_SPACE_BTN ; //Emplacement dans le panneau en fonction de la verticalité
+	m_button = new wxButton(this, ID_BUTTON_SD_BACK, wxT("Reculer forme"), wxPoint(10, y)) ;
+	Bind(wxEVT_BUTTON, &MyControlPanel::OnButton, this, ID_BUTTON_SD_BACK) ;
+
+	//Ajout d'un bouton (Gomme)
+	y += WIDGET_Y_SPACE_BTN_PLUS ; //Emplacement dans le panneau en fonction de la verticalité
+	m_button = new wxButton(this, ID_BUTTON_DELETE, wxT("Gomme"), wxPoint(10, y)) ;
+	Bind(wxEVT_BUTTON, &MyControlPanel::OnButton, this, ID_BUTTON_DELETE) ;
+
 
 	y+= WIDGET_Y_SPACE_SLINE ;
 	wxStaticLine *sline1 = new wxStaticLine(this, wxID_ANY, wxPoint(20, y), wxSize(100,2));
@@ -375,6 +391,33 @@ void MyControlPanel::OnButton(wxCommandEvent &event)
 	//On recupère l'id du btn qui viens d'etre cliqué
 	monControleur->btnSelected = event.GetId();
 
+	switch(monControleur->btnSelected){
+		case ID_BUTTON_DELETE :
+			monControleur->GetFrame()->SetStatusText(wxT("Mode gomme activé, cliquez sur une forme pour la supprimer !")) ;
+			break;
+		case ID_BUTTON_LINE :
+			monControleur->GetFrame()->SetStatusText(wxT("Mode ligne activé, cliquez dans la zone de dessin pour créer votre ligne !")) ;
+			break;
+		case ID_BUTTON_RECT :
+			monControleur->GetFrame()->SetStatusText(wxT("Mode rectangle activé, cliquez dans la zone de dessin pour créer votre rectangle !")) ;
+			break;
+		case ID_BUTTON_CIRCLE :
+			monControleur->GetFrame()->SetStatusText(wxT("Mode cercle activé, cliquez dans la zone de dessin pour créer votre cercle !")) ;
+			break;
+		case ID_BUTTON_TRIANGLE :
+			monControleur->GetFrame()->SetStatusText(wxT("Mode triangle activé, cliquez dans la zone de dessin pour créer votre triangle !")) ;
+			break;
+		case ID_BUTTON_SD_BACK :
+			monControleur->GetFrame()->SetStatusText(wxT("Mode reculer forme activé, cliquez sur une forme pour la mettre à l'arrière plan !")) ;
+			break;
+		case ID_BUTTON_SD_FRONT :
+			monControleur->GetFrame()->SetStatusText(wxT("Mode avancer forme activé, cliquez sur une forme pour la ramener au premier plan !")) ;
+			break;
+		default:
+			monControleur->GetFrame()->SetStatusText(wxT("Cliquez dans la zone de dessin a droite et parametrez à gauche. Aucun mode selectioné !")) ;
+			break;
+	}
+
 	//On affiche quel btn viens d'etre selectioné avec une pop up
 	switch(monControleur->btnSelected){
 		case ID_BUTTON_DELETE :
@@ -390,12 +433,20 @@ void MyControlPanel::OnButton(wxCommandEvent &event)
 			wxMessageBox(wxT("Rectangle activé")) ;
 			break;
 		case ID_BUTTON_CIRCLE :
-			//A chaque nouveau rectangle on definit son action
+			//A chaque nouveau cercle on definit son action
 			wxMessageBox(wxT("Cercle activé")) ;
 			break;
 		case ID_BUTTON_TRIANGLE :
-			//A chaque nouveau rectangle on definit son action
+			//A chaque nouveau triangle on definit son action
 			wxMessageBox(wxT("Triangle activé")) ;
+			break;
+		case ID_BUTTON_SD_BACK:
+			//A send forme to back
+			wxMessageBox(wxT("Reculer forme activé")) ;
+			break;
+		case ID_BUTTON_SD_FRONT:
+			//A send forme to front
+			wxMessageBox(wxT("Avancer forme activé")) ;
 			break;
 		default:
 			wxMessageBox(wxT("Bouton inutilisé")) ;
@@ -405,7 +456,6 @@ void MyControlPanel::OnButton(wxCommandEvent &event)
 	//Suppression des formes entamés et non finies
 	monControleur->stepShape = 0;
 	monControleur->ResetPts();
-
 
 	Refresh();
 
@@ -503,7 +553,7 @@ void MyDrawingPanel::OnMouseLeftDown(wxMouseEvent &event)
 	
 	switch(monControleur->btnSelected){
 		case ID_BUTTON_DELETE :
-			//A chaque nouvelle ligne on definit son action
+			//Suppression forme
 			monControleur->DeleteShape(m_onePoint.x, m_onePoint.y);
 			break;
 		case ID_BUTTON_LINE :
@@ -563,6 +613,12 @@ void MyDrawingPanel::OnMouseLeftDown(wxMouseEvent &event)
 				monControleur->stepShape = 0;
 				monControleur->AddTriangle();
 			}
+			break;
+		case ID_BUTTON_SD_BACK :
+			monControleur->SendBack(m_onePoint.x, m_onePoint.y);
+			break;
+		case ID_BUTTON_SD_FRONT :
+			monControleur->SendFront(m_onePoint.x, m_onePoint.y);
 			break;
 		default:
 			break;
@@ -745,7 +801,7 @@ MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size)
 // create the panel that will display the graphics
 	m_drawingPanel = new MyDrawingPanel(this);
 	CreateStatusBar() ;
-	SetStatusText(wxT("click in the right panel and tune the controls of the left panel. Visit the File menu!")) ;
+	SetStatusText(wxT("Cliquez dans la zone de dessin a droite et parametrez à gauche. Aucun mode selectioné !")) ;
 	Centre() ; // Guess what it does ;-)
 }
 
@@ -1010,6 +1066,28 @@ void MonControleur::DeleteShape(int x, int y){
     {
 		if(dessin->getVector()[i]->IsInside(x,y)){
 			dessin->removeVector(i);
+			break;
+		}
+    }
+}
+
+void MonControleur::SendBack(int x, int y){
+	int i =0;    
+	for(int i = dessin->getVector().size() - 1; i >= 0; i--)
+    {
+		if(dessin->getVector()[i]->IsInside(x,y)){
+			dessin->SendBackVector(i);
+			break;
+		}
+    }
+}
+
+void MonControleur::SendFront(int x, int y){
+	int i =0;    
+	for(int i = dessin->getVector().size() - 1; i >= 0; i--)
+    {
+		if(dessin->getVector()[i]->IsInside(x,y)){
+			dessin->SendFrontVector(i);
 			break;
 		}
     }

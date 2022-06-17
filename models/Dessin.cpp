@@ -33,3 +33,21 @@ void Dessin::removeVector(int i)
 {
  this->dessins.erase(dessins.begin()+i);
 }
+
+void Dessin::SendBackVector(int i)
+{
+	if((i-1) >= 0){
+		Forme* stockageTmp = dessins[i];
+		dessins[i] = dessins[(i-1)];
+		dessins[(i-1)] = stockageTmp;
+	}
+}
+
+void Dessin::SendFrontVector(int i)
+{
+	if((i+1) < dessins.size()){
+		Forme* stockageTmp = dessins[i];
+		dessins[i] = dessins[(i+1)];
+		dessins[(i+1)] = stockageTmp;
+	}
+}
